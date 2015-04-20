@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="EHairdressing">
+        <wb-resource deploy-path="/" source-path="/webapp" tag="defaultRootSource"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+        <dependent-module archiveName="sentinel-theme-1.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/C:/Users/Rubén/Desktop/sentinel-layout-1.1/sentinel-theme-1.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="primefaces-5.2-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/C:/Users/Rubén/Desktop/primefaces-5.2-SNAPSHOT.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <property name="context-root" value="EHairdressing"/>
+        <property name="java-output-path" value="/EHairdressing/build/classes"/>
+    </wb-module>
+</project-modules>
