@@ -3,7 +3,8 @@ package edu.uoc.rsanchezs.ehairdressing.service;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import edu.uoc.rsanchezs.ehairdressing.util.EHairdressing;
+
+import edu.uoc.rsanchezs.ehairdressing.util.EHairdressingPU;
 
 /**
  * @author Rubén
@@ -13,7 +14,7 @@ public abstract class AbstractService<T> {
 	
 
 	  /* @PersistenceContext(unitName = "EHairdressing")*/
-	   @Inject @EHairdressing
+	   @Inject @EHairdressingPU
 	   protected EntityManager em;
 
 	   private Class<T> entityClass;

@@ -6,9 +6,6 @@
 		transaction-type="JTA">
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
 		<jta-data-source>jdbc/ehairdressing</jta-data-source>
-		<class>edu.uoc.rsanchezs.ehairdressing.model.Customer</class>
-		<class>edu.uoc.rsanchezs.ehairdressing.model.Groups</class>
-		<class>edu.uoc.rsanchezs.ehairdressing.model.User</class>
 		<properties>
 			<property name="eclipselink.logging.level" value="FINE" />
 			<property name="eclipselink.ddl-generation" value="drop-and-create-tables" />

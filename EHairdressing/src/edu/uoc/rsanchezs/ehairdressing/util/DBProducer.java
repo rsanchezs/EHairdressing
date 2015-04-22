@@ -13,7 +13,7 @@ public class DBProducer
     // =             Attributes             =
     // ======================================
 
-    @Produces @EHairdressing
+    @Produces @EHairdressingPU
     @PersistenceContext(unitName = "EHairdressing")
     private EntityManager em;
 }

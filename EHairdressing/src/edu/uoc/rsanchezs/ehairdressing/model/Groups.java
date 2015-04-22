@@ -5,6 +5,7 @@ import java.lang.String;
 import java.util.List;
 
 import javax.persistence.*;
+import static javax.persistence.GenerationType.AUTO;
 
 /**
  * Entity implementation class for Entity: Group
@@ -15,28 +16,55 @@ public class Groups implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	@Id
-	@GeneratedValue
+	
 	private Long id;
 	private String name;
 	private String description;
-	@ManyToMany
-	@JoinTable(name = "group_user", 
-	joinColumns = @JoinColumn(name = "group_fk", referencedColumnName = "id"), 
-	inverseJoinColumns = @JoinColumn(name = "user_fk", referencedColumnName = "id"))
-	private List<User> users;
+	private List<Customer> customers;
 	
 
 	public Groups() {
 		super();
-	}   
-	
+	}
+
+
 	/**
 	 * @return the id
 	 */
+	@Id
+	@GeneratedValue(strategy=AUTO)
 	public Long getId() {
 		return id;
 	}
+
+
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
+
+
+	/**
+	 * @return the description
+	 */
+	public String getDescription() {
+		return description;
+	}
+
+
+	/**
+	 * @return the customers
+	 */
+	@ManyToMany
+	@JoinTable(name = "group_user", 
+	joinColumns = @JoinColumn(name = "group_fk", referencedColumnName = "id"), 
+	inverseJoinColumns = @JoinColumn(name = "user_fk", referencedColumnName = "id"))
+	public List<Customer> getUsers() {
+		return customers;
+	}
+
 
 	/**
 	 * @param id the id to set
@@ -45,33 +73,30 @@ public class Groups implements Serializable {
 		this.id = id;
 	}
 
-	/**
-	 * @return the users
-	 */
-	public List<User> getUsers() {
-		return users;
-	}
 
 	/**
-	 * @param users the users to set
+	 * @param name the name to set
 	 */
-	public void setUsers(List<User> users) {
-		this.users = users;
-	}
-
-	public String getName() {
-		return this.name;
-	}
-
 	public void setName(String name) {
 		this.name = name;
-	}   
-	public String getDescription() {
-		return this.description;
 	}
 
+
+	/**
+	 * @param description the description to set
+	 */
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
+
+	/**
+	 * @param customers the customers to set
+	 */
+	public void setUsers(List<Customer> customers) {
+		this.customers = customers;
+	}   
+	
+	
    
 }

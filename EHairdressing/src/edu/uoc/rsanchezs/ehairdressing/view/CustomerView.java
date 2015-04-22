@@ -1,68 +1,81 @@
 package edu.uoc.rsanchezs.ehairdressing.view;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.SessionScoped;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import edu.uoc.rsanchezs.ehairdressing.model.Customer;
-import edu.uoc.rsanchezs.ehairdressing.service.CustomerEJB;
+import edu.uoc.rsanchezs.ehairdressing.service.CustomerService;
+
 
 @Named
-@SessionScoped
-public class CustomerView {
+@RequestScoped
+public class CustomerView extends AbstractBean {
 	
 	@Inject
-	private CustomerEJB customerEJB;
+	private CustomerService customerService;
 	
-	private Customer selectedCustomer;
-	private List<Customer> customers;
+	private Customer customer = new Customer();
+	private List<Customer> customers = new ArrayList<Customer>();
+	
+	
+	/**
+	 * 
+	 */
+	public CustomerView() {
+		super();
+	}
 	
 	@PostConstruct
 	public void init() {
-		customers=customerEJB.findAllCustomers();
+		customers = customerService.findAllCustomers();
 	}
+
 	/**
-	 * @return the customerEJB
+	 * @return the customer
 	 */
-	public CustomerEJB getCustomerEJB() {
-		return customerEJB;
+	public Customer getCustomer() {
+		return customer;
 	}
+
+
 	/**
-	 * @param customerEJB the customerEJB to set
+	 * @param customer the customer to set
 	 */
-	public void setCustomerEJB(CustomerEJB customerEJB) {
-		this.customerEJB = customerEJB;
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
+	
+
 	/**
-	 * @return the selectedCustomer
+	 * @return the customerList
 	 */
-	public Customer getSelectedCustomer() {
-		return selectedCustomer;
-	}
-	/**
-	 * @param selectedCustomer the selectedCustomer to set
-	 */
-	public void setSelectedCustomer(Customer selectedCustomer) {
-		this.selectedCustomer = selectedCustomer;
-	}
-	/**
-	 * @return the selectedCustomers
-	 */
-	public List<Customer> getSelectedCustomers() {
+	public List<Customer> getCustomers() {
 		return customers;
 	}
+
+
+
+
 	/**
-	 * @param selectedCustomers the selectedCustomers to set
+	 * @param customerList the customerList to set
 	 */
-	public void setSelectedCustomers(List<Customer> selectedCustomers) {
-		this.customers = selectedCustomers;
+	public void setCustomers(List<Customer> customers) {
+		this.customers = customers;
+	}
+
+	public String doCreateCustomer() {
+		
+		customerService.createCustomer(customer);
+		
+		return "";
 	}
 	
 	
-	
-	
+
 
 }
