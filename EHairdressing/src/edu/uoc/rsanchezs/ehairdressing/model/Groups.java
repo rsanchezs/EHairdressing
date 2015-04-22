@@ -58,7 +58,7 @@ public class Groups implements Serializable {
 	 * @return the customers
 	 */
 	@ManyToMany
-	@JoinTable(name = "group_user", 
+	@JoinTable(name = "group_customer", 
 	joinColumns = @JoinColumn(name = "group_fk", referencedColumnName = "id"), 
 	inverseJoinColumns = @JoinColumn(name = "user_fk", referencedColumnName = "id"))
 	public List<Customer> getUsers() {

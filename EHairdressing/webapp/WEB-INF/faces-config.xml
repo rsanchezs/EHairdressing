@@ -5,12 +5,10 @@
 	version="2.2">
 	<application>
 		<resource-bundle>
-			<base-name>Messages</base-name>
+			<base-name>resources.Messages</base-name>
 			<var>i18n</var>
 		</resource-bundle>
-		<message-bundle>Messages</message-bundle>
-<!-- 		<message-bundle>Messages</message-bundle> -->
-<!-- 		<message-bundle>ValidationMessages</message-bundle> -->
+		<message-bundle>resources.Messages</message-bundle>
 		<locale-config>
 			<default-locale>es</default-locale>
 			<supported-locale>en</supported-locale>

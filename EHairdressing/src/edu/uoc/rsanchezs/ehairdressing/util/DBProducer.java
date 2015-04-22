@@ -14,6 +14,6 @@ public class DBProducer
     // ======================================
 
     @Produces @EHairdressingPU
-    @PersistenceContext(unitName = "EHairdressing")
+    @PersistenceContext(unitName = "EHairdressingPU")
     private EntityManager em;
 }
