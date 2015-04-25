@@ -13,7 +13,7 @@ import edu.uoc.rsanchezs.ehairdressing.util.EHairdressingPU;
 public abstract class AbstractService<T> {
 	
 
-	  /* @PersistenceContext(unitName = "EHairdressingPU")*/
+	  /* @PersistenceContext(unitName = "EHairdressing")*/
 	   @Inject @EHairdressingPU
 	   protected EntityManager em;
 

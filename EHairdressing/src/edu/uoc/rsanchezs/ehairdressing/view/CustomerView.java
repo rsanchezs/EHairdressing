@@ -1,5 +1,6 @@
 package edu.uoc.rsanchezs.ehairdressing.view;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,8 +15,11 @@ import edu.uoc.rsanchezs.ehairdressing.service.CustomerService;
 
 @Named
 @RequestScoped
-public class CustomerView extends AbstractBean {
+public class CustomerView extends AbstractBean implements Serializable {
 	
+	
+	private static final long serialVersionUID = 1488471499773712565L;
+
 	@Inject
 	private CustomerService customerService;
 	
@@ -71,6 +75,19 @@ public class CustomerView extends AbstractBean {
 	public String doCreateCustomer() {
 		
 		customerService.createCustomer(customer);
+		
+		return "";
+	}
+	
+	public String doDeleteCustomer() {
+		customerService.remove(customer);
+		return "customers?faces-redirect=true";
+	}
+	
+	
+	public String doUpdateCustomer() {
+		
+		customerService.merge(customer);
 		
 		return "";
 	}

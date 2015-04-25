@@ -21,12 +21,14 @@ import javax.persistence.TypedQuery;
 import javax.validation.constraints.NotNull;
 
 import edu.uoc.rsanchezs.ehairdressing.model.Customer;
+import edu.uoc.rsanchezs.ehairdressing.util.Loggable;
 import static edu.uoc.rsanchezs.ehairdressing.model.Customer.FIND_ALL;
 import static edu.uoc.rsanchezs.ehairdressing.model.Customer.GET_BIRTHDAY;
 
 /**
  * Session Bean implementation class CustomerService
  */
+@Loggable
 @Named
 @Stateless
 @LocalBean
@@ -58,7 +60,7 @@ public class CustomerService extends AbstractService<Customer> implements Serial
     	em.persist(customer);
     	
     	ScheduleExpression birthday = new ScheduleExpression().
-    			dayOfMonth(customer.getBithDay()).
+    			dayOfMonth(customer.getBirthDay()).
     			month(customer.getBirthMonth());
     	
     	timerService.createCalendarTimer(birthday, new TimerConfig(customer, true));

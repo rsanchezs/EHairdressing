@@ -1,7 +1,9 @@
 package edu.uoc.rsanchezs.ehairdressing.model;
 
+import static javax.persistence.GenerationType.SEQUENCE;
+
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -15,6 +17,7 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.PostLoad;
 import javax.persistence.PostPersist;
@@ -22,13 +25,10 @@ import javax.persistence.PostUpdate;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
-
-import static javax.persistence.GenerationType.SEQUENCE;
-import static javax.persistence.GenerationType.AUTO;
-import static javax.persistence.GenerationType.IDENTITY;
-
-import javax.persistence.NamedQueries;
 import javax.validation.constraints.NotNull;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.REMOVE;
 
 /**
  * Entity implementation class for Entity: Customer
@@ -50,14 +50,13 @@ public class Customer implements Serializable {
 	private String username;
 	private String name;
 	private String surname;
-	private String lastname;
 	private String mobilePhone;
 	private Date dateOfBirth;
 	private Integer age;
 	private Date creationDate;
 	private Gender gender;
 	private Address address = new Address();
-	private List<Groups> groups;
+	private List<Groups> groups = new ArrayList<Groups>();
 
 	public Customer() {
 		super();
@@ -93,19 +92,12 @@ public class Customer implements Serializable {
 	public String getName() {
 		return name;
 	}
-
+	
 	/**
 	 * @return the surname
 	 */
 	public String getSurname() {
 		return surname;
-	}
-
-	/**
-	 * @return the lastname
-	 */
-	public String getLastname() {
-		return lastname;
 	}
 
 	/**
@@ -151,7 +143,7 @@ public class Customer implements Serializable {
 	/**
 	 * @return the groups
 	 */
-	@ManyToMany(mappedBy = "users")
+	@ManyToMany(mappedBy = "users", cascade = { PERSIST, MERGE, REMOVE })
 	public List<Groups> getGroups() {
 		return groups;
 	}
@@ -210,14 +202,6 @@ public class Customer implements Serializable {
 	 */
 	public void setSurname(String surname) {
 		this.surname = surname;
-	}
-
-	/**
-	 * @param lastname
-	 *            the lastname to set
-	 */
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
 	}
 
 	/**
@@ -291,14 +275,14 @@ public class Customer implements Serializable {
 		}
 
 		age = now.get(Calendar.YEAR) - birth.getMaximum(Calendar.YEAR) + adjust;
-
+		
 	}
 	/**
 	 * Method to return the day of the month that the customer was born
 	 * @return String representing the day of the month
 	 */
 
-	public @NotNull String getBithDay() {
+	public @NotNull String getBirthDay() {
 
 		Calendar birthDay = new GregorianCalendar();
 		birthDay.setTime(dateOfBirth);
@@ -316,5 +300,7 @@ public class Customer implements Serializable {
 		birthMonth.setTime(dateOfBirth);
 		return Integer.toString( birthMonth.get(Calendar.MONTH));
 	}
+	
+	
 
 }

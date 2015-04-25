@@ -1,34 +1,138 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:p="http://primefaces.org/ui"
-                template="/WEB-INF/templates/template.xhtml">
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/template.xhtml">
 
-    <ui:define name="content">
-        <h:outputScript name="jquery/jquery.js" library="primefaces" target="head"/>
-        
-      	<h:form id="form">
-      		<p:dataTable var="customer" value="#{customerView.customers}">
-			    <p:column headerText="Id">
-			        <h:outputText value="#{customer.id}" />
-			    </p:column>
-			 
-			    <p:column headerText="Name">
-			        <h:outputText value="#{customer.name}" />
-			    </p:column>
-			 
-			    <p:column headerText="Surname">
-			        <h:outputText value="#{customer.surname}" />
-			    </p:column>
-			 
-			    <p:column headerText="Lastname">
-			        <h:outputText value="#{customer.surname}" />
-			    </p:column>
-			</p:dataTable>
-      	
-      	
-        </h:form>
-    </ui:define>
+	<ui:define name="title">
+		<title>#{i18n.customers}</title>
+	</ui:define>
+
+	<ui:define name="content">
+		<h:outputScript name="jquery/jquery.js" library="primefaces"
+			target="head" />
+
+		<div class="Container100">
+			<div class="ContainerIndent">
+				<p:panel>
+					<span class="FontBold Fs18 hardblue Container100">#{i18n.customers}</span>
+					<div class="Container100">
+						<div class="ContainerIndent">
+							<h:form id="form">
+								<p:growl id="msgs" showDetail="true"/>
+								<p:dataTable id="customersDT" var="customer"
+									value="#{customerView.customers}" selectionMode="single"
+									selection="#{customerView.customer}" rowKey="#{customer.id}"
+									rows="10" paginator="true"
+									paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+									rowsPerPageTemplate="5,10,15"
+									emptyMessage="No customers found with given criteria"
+									reflow="true" editable="true">
+									<f:facet name="header">
+	              						  #{i18n.listOfCustomers}
+	        					    </f:facet>
+									<p:column headerText="#{i18n.customerId}"
+										sortBy="#{customer.id}">
+										<h:outputText value="#{customer.id}" />
+									</p:column>
+									<p:column headerText="#{i18n.customerName}"
+										sortBy="#{customer.name}">
+										<h:outputText value="#{customer.name}" />
+									</p:column>
+									<p:column headerText="#{i18n.surname}"
+										sortBy="#{customer.surname}">
+										<h:outputText value="#{customer.surname}" />
+									</p:column>
+									<p:column headerText="#{i18n.birthday}"
+										sortBy="#{customer.dateOfBirth}">
+										<h:outputText value="#{customer.dateOfBirth}" />
+									</p:column>
+									<p:column headerText="#{i18n.email}"
+										sortBy="#{customer.username}">
+										<h:outputText value="#{customer.username}" />
+									</p:column>
+									<p:column headerText="#{i18n.mobilephone}"
+										sortBy="#{customer.mobilePhone}">
+										<h:outputText value="#{customer.mobilePhone}" />
+									</p:column>
+									<f:facet name="footer">
+										<p:commandButton process="customersDT"
+											update=":form:customerDetail" value="View"
+											oncomplete="PF('customerDialog').show()" />
+										<p:splitButton value="View" process="customersDT"
+											update=":form:customerDetail"
+											oncomplete="PF('customerDialog').show()">
+											<p:separator />
+											<p:menuitem value="Update" action="#{customerView.doUpdateCustomer()}" 
+											 process=":form:customersDT"  update=":form:customersDT"
+										     icon="ui-icon-arrowrefresh-1-w fa fa-repeat Fs14" />
+											<p:menuitem value="Delete" action="#{customerView.doDeleteCustomer()}"
+											 icon="ui-icon-close fa fa-close Fs14" />
+											<p:separator />
+											<p:menuitem value="New" action="#{customerView.doCreateCustomer()}"
+												icon="ui-icon-contact fa fa-plus" />
+										</p:splitButton>
+									</f:facet>
+								</p:dataTable>
+								<div class="EmptyBox20"></div>
+								<p:dialog header="#{i18n.customerInfo}"
+									widgetVar="customerDialog" modal="true" showEffect="fade"
+									hideEffect="fade" resizable="false">
+									<p:outputPanel id="customerDetail" style="text-align:center;">
+										<p:panelGrid columns="2"
+											rendered="#{not empty customerView.customer}">
+											<h:outputText class="FontBold" value="#{i18n.customerId}:" />
+											<h:outputText value="#{customerView.customer.id}" />
+
+											<h:outputText class="FontBold" value="#{i18n.email}:" />
+											<h:outputText value="#{customerView.customer.username}" />
+
+											<h:outputText class="FontBold" value="#{i18n.password}" />
+											<h:outputText value="#{customerView.customer.password}" />
+
+											<h:outputText class="FontBold" value="#{i18n.customerName}" />
+											<h:outputText value="#{customerView.customer.name}" />
+
+											<h:outputText class="FontBold" value="#{i18n.surname}" />
+											<h:outputText value="#{customerView.customer.surname}" />
+
+											<h:outputText class="FontBold" value="#{i18n.street}" />
+											<h:outputText value="#{customerView.customer.address.street}" />
+
+											<h:outputText class="FontBold" value="#{i18n.city}" />
+											<h:outputText value="#{customerView.customer.address.city}" />
+
+											<h:outputText class="FontBold" value="#{i18n.province}" />
+											<h:outputText
+												value="#{customerView.customer.address.province}" />
+
+											<h:outputText class="FontBold" value="#{i18n.zipcode}" />
+											<h:outputText
+												value="#{customerView.customer.address.zipcode}" />
+
+											<h:outputText class="FontBold" value="#{i18n.birthday}" />
+											<h:outputText value="#{customerView.customer.dateOfBirth}" />
+
+											<h:outputText class="FontBold" value="#{i18n.gender}" />
+											<h:outputText value="#{customerView.customer.gender}" />
+
+											<h:outputText class="FontBold" value="#{i18n.mobilephone}" />
+											<h:outputText value="#{customerView.customer.mobilePhone}" />
+
+											<h:outputText class="FontBold" value="#{i18n.creationDate}" />
+											<h:outputText value="#{customerView.customer.creationDate}" />
+										</p:panelGrid>
+									</p:outputPanel>
+								</p:dialog>
+							</h:form>
+						</div>
+					</div>
+				</p:panel>
+				<div class="EmptyBox20"></div>
+			</div>
+		</div>
+
+	</ui:define>
 
 </ui:composition>

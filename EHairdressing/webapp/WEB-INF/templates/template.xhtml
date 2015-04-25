@@ -12,7 +12,10 @@
             <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
             <meta name="apple-mobile-web-app-capable" content="yes" />
         </f:facet>
-        <title>PrimeFaces Sentinel</title>
+        <ui:insert name="title">
+        	<title>PrimeFaces Sentinel</title>
+        </ui:insert>
+        
         <h:outputScript name="js/layout.js" library="sentinel-layout" />
 
         <h:outputText value="&lt;!--[if gte IE 9]&gt;" escape="false" />

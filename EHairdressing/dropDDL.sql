@@ -1,6 +1,0 @@
-ALTER TABLE group_customer DROP FOREIGN KEY FK_group_customer_user_fk
-ALTER TABLE group_customer DROP FOREIGN KEY FK_group_customer_group_fk
-DROP TABLE CUSTOMER
-DROP TABLE GROUPS
-DROP TABLE group_customer
-DELETE FROM SEQUENCE WHERE SEQ_NAME = 'SEQ_GEN'

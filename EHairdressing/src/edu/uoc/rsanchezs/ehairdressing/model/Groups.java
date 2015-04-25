@@ -2,10 +2,15 @@ package edu.uoc.rsanchezs.ehairdressing.model;
 
 import java.io.Serializable;
 import java.lang.String;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
+
 import static javax.persistence.GenerationType.AUTO;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.REMOVE;
 
 /**
  * Entity implementation class for Entity: Group
@@ -20,7 +25,7 @@ public class Groups implements Serializable {
 	private Long id;
 	private String name;
 	private String description;
-	private List<Customer> customers;
+	private List<Customer> customers = new ArrayList<Customer>();
 	
 
 	public Groups() {
@@ -57,8 +62,8 @@ public class Groups implements Serializable {
 	/**
 	 * @return the customers
 	 */
-	@ManyToMany
-	@JoinTable(name = "group_customer", 
+	@ManyToMany(cascade = { PERSIST, MERGE, REMOVE })
+	@JoinTable(name = "group_user", 
 	joinColumns = @JoinColumn(name = "group_fk", referencedColumnName = "id"), 
 	inverseJoinColumns = @JoinColumn(name = "user_fk", referencedColumnName = "id"))
 	public List<Customer> getUsers() {

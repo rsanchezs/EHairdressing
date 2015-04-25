@@ -9,6 +9,8 @@
 			<var>i18n</var>
 		</resource-bundle>
 		<message-bundle>resources.Messages</message-bundle>
+<!-- 		<message-bundle>Messages</message-bundle> -->
+<!-- 		<message-bundle>ValidationMessages</message-bundle> -->
 		<locale-config>
 			<default-locale>es</default-locale>
 			<supported-locale>en</supported-locale>
