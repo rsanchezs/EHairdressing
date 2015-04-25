@@ -9,7 +9,7 @@
 		<properties>
 			<property name="eclipselink.logging.level" value="FINE" />
 			<property name="eclipselink.ddl-generation" value="drop-and-create-tables" />
-			<property name="javax.persistence.sql-load-script-source" value="init_db.sql"/>
+			<property name="javax.persistence.sql-load-script-source" value="resources/init_db.sql"/>
 		</properties>
 		
 	</persistence-unit>

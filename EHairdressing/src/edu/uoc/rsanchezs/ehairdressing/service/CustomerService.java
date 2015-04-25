@@ -2,10 +2,10 @@ package edu.uoc.rsanchezs.ehairdressing.service;
 
 
 
+import static edu.uoc.rsanchezs.ehairdressing.model.Customer.FIND_ALL;
+
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.List;
-import java.util.zip.GZIPOutputStream;
 
 import javax.annotation.Resource;
 import javax.ejb.LocalBean;
@@ -15,15 +15,12 @@ import javax.ejb.Timeout;
 import javax.ejb.Timer;
 import javax.ejb.TimerConfig;
 import javax.ejb.TimerService;
-import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 import javax.persistence.TypedQuery;
 import javax.validation.constraints.NotNull;
 
 import edu.uoc.rsanchezs.ehairdressing.model.Customer;
 import edu.uoc.rsanchezs.ehairdressing.util.Loggable;
-import static edu.uoc.rsanchezs.ehairdressing.model.Customer.FIND_ALL;
-import static edu.uoc.rsanchezs.ehairdressing.model.Customer.GET_BIRTHDAY;
 
 /**
  * Session Bean implementation class CustomerService
@@ -47,14 +44,13 @@ public class CustomerService extends AbstractService<Customer> implements Serial
     	super(Customer.class);
     }
     
-
 	/**
      * Method that create a Customer in the system. In addition
      * it creates a calendar timer based on the date of bith of
      * the customer. Thus, every year the container will trigger
      * the bean to create and send a birthday e-mail to the customer.
-     * @param customer to persist
-     * @return customer persisted
+     * @param Customer to persist
+     * @return Customer persisted
      */
     public @NotNull Customer createCustomer(@NotNull Customer customer){
     	em.persist(customer);
@@ -67,6 +63,7 @@ public class CustomerService extends AbstractService<Customer> implements Serial
     	
     	return customer;
     }
+    
     
     /**
      * With the create timer in the method createCustomer(), the container will invoke 

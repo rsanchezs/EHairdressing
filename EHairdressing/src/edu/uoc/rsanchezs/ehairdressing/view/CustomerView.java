@@ -9,12 +9,15 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import edu.uoc.rsanchezs.ehairdressing.model.Address;
 import edu.uoc.rsanchezs.ehairdressing.model.Customer;
 import edu.uoc.rsanchezs.ehairdressing.service.CustomerService;
+import edu.uoc.rsanchezs.ehairdressing.util.Loggable;
 
 
 @Named
 @RequestScoped
+@Loggable
 public class CustomerView extends AbstractBean implements Serializable {
 	
 	
@@ -24,12 +27,11 @@ public class CustomerView extends AbstractBean implements Serializable {
 	private CustomerService customerService;
 	
 	private Customer customer = new Customer();
+	private Address address = new Address();
 	private List<Customer> customers = new ArrayList<Customer>();
 	
 	
-	/**
-	 * 
-	 */
+	
 	public CustomerView() {
 		super();
 	}
@@ -46,14 +48,12 @@ public class CustomerView extends AbstractBean implements Serializable {
 		return customer;
 	}
 
-
 	/**
 	 * @param customer the customer to set
 	 */
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
 	}
-	
 
 	/**
 	 * @return the customerList
@@ -62,9 +62,6 @@ public class CustomerView extends AbstractBean implements Serializable {
 		return customers;
 	}
 
-
-
-
 	/**
 	 * @param customerList the customerList to set
 	 */
@@ -72,24 +69,34 @@ public class CustomerView extends AbstractBean implements Serializable {
 		this.customers = customers;
 	}
 
+	/**
+	 * @return the address
+	 */
+	public Address getAddress() {
+		return address;
+	}
+
+	/**
+	 * @param address the address to set
+	 */
+	public void setAddress(Address address) {
+		this.address = address;
+	}
+
 	public String doCreateCustomer() {
-		
-		customerService.createCustomer(customer);
-		
-		return "";
+		customer=customerService.createCustomer(customer);
+		return "view";
 	}
 	
 	public String doDeleteCustomer() {
 		customerService.remove(customer);
-		return "customers?faces-redirect=true";
+		return "/admin/customers/view?faces-redirect=true";
 	}
 	
 	
 	public String doUpdateCustomer() {
-		
 		customerService.merge(customer);
-		
-		return "";
+		return "/admin/customers/view?faces-redirect=true";
 	}
 	
 	

@@ -6,7 +6,7 @@
 	template="/WEB-INF/templates/template.xhtml">
 
 	<ui:define name="title">
-		<title>#{i18n.customers}</title>
+		#{i18n.customers}
 	</ui:define>
 
 	<ui:define name="content">
@@ -46,7 +46,9 @@
 									</p:column>
 									<p:column headerText="#{i18n.birthday}"
 										sortBy="#{customer.dateOfBirth}">
-										<h:outputText value="#{customer.dateOfBirth}" />
+										<h:outputText value="#{customer.dateOfBirth}">
+											<f:convertDateTime type="date"/>
+										</h:outputText>
 									</p:column>
 									<p:column headerText="#{i18n.email}"
 										sortBy="#{customer.username}">
@@ -57,22 +59,25 @@
 										<h:outputText value="#{customer.mobilePhone}" />
 									</p:column>
 									<f:facet name="footer">
-										<p:commandButton process="customersDT"
-											update=":form:customerDetail" value="View"
-											oncomplete="PF('customerDialog').show()" />
-										<p:splitButton value="View" process="customersDT"
-											update=":form:customerDetail"
-											oncomplete="PF('customerDialog').show()">
+										<p:splitButton value="#{i18n.view}" process="customersDT"
+												update=":form:customerDetail"
+												oncomplete="PF('customerDialog').show()">
+											
+											<p:menuitem value="#{i18n.update}" process="customersDT"
+											update=":form:customerEditDetail"
+											oncomplete="PF('customerEditDialog').show()"
+											icon="ui-icon-arrowrefresh-1-w fa fa-repeat Fs14"/>
+											
+											<p:menuitem value="#{i18n.delete}" icon="ui-icon-close fa fa-close Fs14"
+											process="customersDT"
+											action="#{customerView.doDeleteCustomer()}"/>
+	
 											<p:separator />
-											<p:menuitem value="Update" action="#{customerView.doUpdateCustomer()}" 
-											 process=":form:customersDT"  update=":form:customersDT"
-										     icon="ui-icon-arrowrefresh-1-w fa fa-repeat Fs14" />
-											<p:menuitem value="Delete" action="#{customerView.doDeleteCustomer()}"
-											 icon="ui-icon-close fa fa-close Fs14" />
-											<p:separator />
-											<p:menuitem value="New" action="#{customerView.doCreateCustomer()}"
+											<p:menuitem value="#{i18n.new}"
+												outcome="/admin/customers/create"
 												icon="ui-icon-contact fa fa-plus" />
 										</p:splitButton>
+
 									</f:facet>
 								</p:dataTable>
 								<div class="EmptyBox20"></div>
@@ -104,16 +109,15 @@
 											<h:outputText value="#{customerView.customer.address.city}" />
 
 											<h:outputText class="FontBold" value="#{i18n.province}" />
-											<h:outputText
-												value="#{customerView.customer.address.province}" />
+											<h:outputText value="#{customerView.customer.address.province}" />
 
 											<h:outputText class="FontBold" value="#{i18n.zipcode}" />
-											<h:outputText
-												value="#{customerView.customer.address.zipcode}" />
+											<h:outputText value="#{customerView.customer.address.zipcode}" />
 
 											<h:outputText class="FontBold" value="#{i18n.birthday}" />
-											<h:outputText value="#{customerView.customer.dateOfBirth}" />
-
+											<h:outputText value="#{customerView.customer.dateOfBirth}">
+												<f:convertDateTime type="date"/>
+											</h:outputText>
 											<h:outputText class="FontBold" value="#{i18n.gender}" />
 											<h:outputText value="#{customerView.customer.gender}" />
 
@@ -121,7 +125,68 @@
 											<h:outputText value="#{customerView.customer.mobilePhone}" />
 
 											<h:outputText class="FontBold" value="#{i18n.creationDate}" />
-											<h:outputText value="#{customerView.customer.creationDate}" />
+											<h:outputText value="#{customerView.customer.creationDate}">
+												<f:convertDateTime type="date"/>
+											</h:outputText>
+										</p:panelGrid>
+									</p:outputPanel>
+								</p:dialog>
+							
+								<p:dialog header="#{i18n.customerEdit}"
+									widgetVar="customerEditDialog" showEffect="fade" 
+									hideEffect="fade" resizable="true" closable="true" showHeader="true"
+									minimizable="true" maximizable="true" width="500" height="400">
+									<p:outputPanel id="customerEditDetail" style="text-align:center;">
+										<p:panelGrid columns="2" 
+											rendered="#{not empty customerView.customer}">
+											<h:outputText class="FontBold" value="#{i18n.customerId}:" />
+											<p:inputText value="#{customerView.customer.id}" readonly="true" disabled="false" />
+											
+											<h:outputText class="FontBold" value="#{i18n.email}:" />
+											<p:inputText value="#{customerView.customer.username}" size="20"/>
+
+											<h:outputText class="FontBold" value="#{i18n.password}" />
+											<p:inputText value="#{customerView.customer.password}" />
+
+											<h:outputText class="FontBold" value="#{i18n.customerName}" />
+											<p:inputText value="#{customerView.customer.name}" />
+
+											<h:outputText class="FontBold" value="#{i18n.surname}" />
+											<p:inputText value="#{customerView.customer.surname}" />
+
+											<h:outputText class="FontBold" value="#{i18n.street}" />
+											<p:inputText value="#{customerView.address.street}" />
+
+											<h:outputText class="FontBold" value="#{i18n.city}" />
+											<p:inputText value="#{customerView.address.city}" />
+
+											<h:outputText class="FontBold" value="#{i18n.province}" />
+											<p:inputText value="#{customerView.address.province}" />
+
+											<h:outputText class="FontBold" value="#{i18n.zipcode}" />
+											<p:inputText value="#{customerView.address.zipcode}" />
+
+											<h:outputText class="FontBold" value="#{i18n.birthday}" />
+											<p:inputText value="#{customerView.customer.dateOfBirth}">
+												<f:convertDateTime type="date"/>
+											</p:inputText>
+											
+											<h:outputText class="FontBold" value="#{i18n.gender}" />
+											<p:inputText value="#{customerView.customer.gender}"/>
+												
+											<h:outputText class="FontBold" value="#{i18n.mobilephone}" />
+											<p:inputText value="#{customerView.customer.mobilePhone}" />
+
+											<h:outputText class="FontBold" value="#{i18n.creationDate}" />
+											<p:inputText value="#{customerView.customer.creationDate}">
+												<f:convertDateTime type="date"/>
+											</p:inputText>
+											<f:facet name="footer">
+												<div class="EmptyBox10"/>
+												<p:commandButton value="#{i18n.cancel}" onclick="PF('customerEditDialog').hide();" /> 
+												<p:commandButton value="#{i18n.ok}" action="#{customerView.doUpdateCustomer()}"
+												onclick="PF('customerEditDialog').hide();"/>
+											</f:facet>
 										</p:panelGrid>
 									</p:outputPanel>
 								</p:dialog>
@@ -129,7 +194,6 @@
 						</div>
 					</div>
 				</p:panel>
-				<div class="EmptyBox20"></div>
 			</div>
 		</div>
 
