@@ -28,14 +28,14 @@
                 <p:menuitem id="sm_schedule_appointment" value="#{i18n.schedule_appointment}" icon="icon-calendar-2" outcome="empty-page"/>
             </p:submenu>
             <p:submenu id="sm_email" label="#{i18n.email}" icon="icon-mail-2"> 
-                   <p:menuitem id="sm_new_email" value="#{i18n.new}" icon="icon-pencil-2" outcome="empty-page.xhtml"/>
+                   <p:menuitem id="sm_new_email" value="#{i18n.new}" icon="icon-pencil-2" outcome="/admin/email/create"/>
                    <p:menuitem id="sm_saved_email" value="#{i18n.saved}" icon="icon-floppy" outcome="empty-page.xhtml" />
                    <p:menuitem id="sm_send_email" value="#{i18n.send}" icon="icon-upload-2" outcome="empty-page.xhtml" />
                    <p:menuitem id="sm_state_email" value="#{i18n.state}" icon="icon-history" outcome="empty-page.xhtml" />
             </p:submenu>
             
-             <p:submenu id="sm_sms" label="#{i18n.email}" icon="icon-chat-2"> 
-                   <p:menuitem id="sm_new_sms" value="#{i18n.new}" icon="icon-pencil-2" outcome="empty-page.xhtml"/>
+             <p:submenu id="sm_sms" label="#{i18n.sms}" icon="icon-chat-2"> 
+                   <p:menuitem id="sm_new_sms" value="#{i18n.new}" icon="icon-pencil-2" outcome="/admin/sms/create"/>
                    <p:menuitem id="sm_saved_sms" value="#{i18n.saved}" icon="icon-floppy" outcome="empty-page.xhtml" />
                    <p:menuitem id="sm_send_sms" value="#{i18n.send}" icon="icon-upload-2" outcome="empty-page.xhtml" />
                    <p:menuitem id="sm_state_sms" value="#{i18n.state}" icon="icon-history" outcome="empty-page.xhtml" />

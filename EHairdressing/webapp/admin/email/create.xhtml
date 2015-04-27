@@ -1,0 +1,48 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/templates/template.xhtml">
+                
+    <ui:define name="title">
+		Nuevo email
+	</ui:define>
+	
+    <ui:define name="content">
+        <h:outputScript name="jquery/jquery.js" library="primefaces" target="head"/>
+        	<style type="text/css">
+            .ui-panel {
+                margin-top:20px
+            }
+     </style>
+		<div class="Container100">
+			<div class="ContainerIndent">
+			<h:form>
+				<p:panel header="Nuevo email">
+				<div class="EmptyBox10"/>
+					<div class="EmptyBox10"/> 
+					<p:panelGrid columns="1" layout="grid" style="border:0px none;background:none">
+						<p:outputLabel styleClass="FontNormal Fs16"  value="Asunto"/>
+	                    <p:inputText id="subject" styleClass="Wid80 FontLight Fs16" title="Introduce el asunto del mensaje (se muestra al destinatario)" value="" />
+	                    <p:tooltip id="toolTipSubject" for="subject" showEvent="focus" hideEvent="blur" />
+	                    <p:outputLabel styleClass="FontNormal Fs16"  value="Notas administrativas"/>
+	                    <p:inputText id="note" styleClass="Wid80 FontLight Fs16"  title="Introduce notas administrativas (no se le muestra al destinatario)" value=""/> 
+	                    <p:tooltip id="toolTipNotes" for="note" showEvent="focus" hideEvent="blur" />
+	                    <p:outputLabel styleClass="FontNormal Fs16" value="Etiqueta"/>  
+	                    <p:inputText id="tag" styleClass="Wid80 FontLight Fs16" title="Tags son etiquetas que pueden ayudarte a agregar mensajes en categorias.Utiliza
+	                    las etiquetas para buscar mensajes o crear filtros.Puedes añadir varias etiquetas a cada mensaje" placeholder="Seleccionar una o más etiquetas" value="" />
+	                    <p:tooltip id="toolTipTags" for="tag" showEvent="focus" hideEvent="blur" />
+	                </p:panelGrid>
+	                <div class="EmptyBox30"/>
+	                <p:editor id="editor" widgetVar="editorWidget" value="#{editorView.text}" width="850" />
+	                <div class="EmptyBox20"/>
+	                <p:commandButton value="Guardar" icon="ui-icon-disk fa fa-save Fs14" />
+				</p:panel>
+			  </h:form>	
+			</div>
+		</div>
+        
+    </ui:define>
+
+</ui:composition>
