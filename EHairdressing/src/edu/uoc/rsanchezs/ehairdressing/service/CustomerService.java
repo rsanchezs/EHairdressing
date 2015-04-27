@@ -100,8 +100,8 @@ public class CustomerService extends AbstractService<Customer> implements Serial
      * @return
      */
     public List<Customer> findAllCustomers(){
-    	TypedQuery<Customer> customers= em.createNamedQuery(FIND_ALL, Customer.class);
-    	return customers.getResultList();
+    	//TypedQuery<Customer> customers= em.createNamedQuery(FIND_ALL, Customer.class);
+    	return findWithNamedQuery(FIND_ALL);
     }
     
 }

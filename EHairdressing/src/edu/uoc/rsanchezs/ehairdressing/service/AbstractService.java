@@ -1,8 +1,11 @@
-
 package edu.uoc.rsanchezs.ehairdressing.service;
+
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 import edu.uoc.rsanchezs.ehairdressing.util.EHairdressingPU;
 
@@ -11,44 +14,93 @@ import edu.uoc.rsanchezs.ehairdressing.util.EHairdressingPU;
  *
  */
 public abstract class AbstractService<T> {
-	
 
-	  /* @PersistenceContext(unitName = "EHairdressing")*/
-	   @Inject @EHairdressingPU
-	   protected EntityManager em;
+	/* @PersistenceContext(unitName = "EHairdressing") */
+	@Inject
+	@EHairdressingPU
+	protected EntityManager em;
 
-	   private Class<T> entityClass;
+	private Class<T> entityClass;
 
-	  
-	   public AbstractService()
-	   {
-	   }
+	public AbstractService() {
+	}
 
-	   public AbstractService(Class<T> entityClass)
-	   {
-	      this.entityClass = entityClass;
-	   }
+	/**
+	 * Default constructor
+	 * 
+	 * @param entityClass
+	 */
+	public AbstractService(Class<T> entityClass) {
+		this.entityClass = entityClass;
+	}
 
-	   public T persist(T entity)
-	   {
-	      em.persist(entity);
-	      return entity;
-	   }
+	/**
+	 * Stores an instance of the entity class in the database
+	 * 
+	 * @param T Object
+	 * @return
+	 */
+	public T persist(T entity) {
+		em.persist(entity);
+		em.flush();
+		em.refresh(entity);
+		return entity;
+	}
 
-	   public T findById(Long id)
-	   {
-	      return em.find(entityClass, id);
-	   }
+	/**
+	 * Retrieves an entity instance that was previously persisted to the
+	 * database
+	 * @param T  Objet
+	 * @param id
+	 * @return
+	 */
+	public T findById(Long id) {
+		return em.find(entityClass, id);
+	}
 
-	   public void remove(T entity)
-	   {
-	      em.remove(em.merge(entity));
-	   }
+	/**
+	 * Removes the record that is associated with the entity instance
+	 * @param T Object
+	 */
+	public void remove(T entity) {
+		em.remove(em.merge(entity));
+	}
 
-	   public T merge(T entity)
-	   {
-	      return em.merge(entity);
-	   }
+	/**
+	 * @param entity
+	 * @return
+	 */
+	public T merge(T entity) {
+		return em.merge(entity);
+	}
 
+	/**
+	 * Returns the number of records that meet the criteria
+	 * @param namedQueryName
+	 * @return List
+	 */
+	public List<T> findWithNamedQuery(String namedQueryName) {
+		TypedQuery<T> query = em.createNamedQuery(namedQueryName, entityClass);
+		return query.getResultList();
+	}
 
+	/**
+	 * Returns the number of records that meet the criteria
+	 * @param namedQueryName
+	 * @return List
+	 */
+	// public List findWithNamedQuery(String namedQueryName) {
+	// return this.em.createNamedQuery(namedQueryName).getResultList();
+	// }
+
+	/**
+	 * Returns the number of total records
+	 * @param namedQueryName
+	 * @return int
+	 */
+	public int countTotalRecord(String namedQueryName) {
+		Query query = em.createNamedQuery(namedQueryName);
+		Number result = (Number) query.getSingleResult();
+		return result.intValue();
+	}
 }

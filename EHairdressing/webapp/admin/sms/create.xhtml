@@ -36,8 +36,12 @@
 		                <p:outputLabel styleClass="FontBold Fs16"  value="Mensaje de texto"/>
 		                <p:inputTextarea rows="12" cols="100" counter="display" maxlength="160" counterTemplate="{0} characters remaining." autoResize="false" />
 	    				<h:outputText id="display" />
-		                <p:commandButton value="Guardar" icon="ui-icon-disk fa fa-save Fs14" />
-	                </p:panelGrid>
+							<p:menuButton value="Opciones">
+								<p:menuitem value="Guardar" icon="ui-icon-disk fa fa-save Fs14" />
+								<p:separator />
+								<p:menuitem value="Cancelar" outcome="/admin/customers/view" icon="ui-icon-extlink fa fa-external-link Fs14" />
+							</p:menuButton>
+						</p:panelGrid>
 				</p:panel>
 			  </h:form>	
 			</div>

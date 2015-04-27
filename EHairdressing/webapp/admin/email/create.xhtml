@@ -37,7 +37,11 @@
 	                <div class="EmptyBox30"/>
 	                <p:editor id="editor" widgetVar="editorWidget" value="#{editorView.text}" width="850" />
 	                <div class="EmptyBox20"/>
-	                <p:commandButton value="Guardar" icon="ui-icon-disk fa fa-save Fs14" />
+	                 <p:menuButton value="Opciones">
+                       <p:menuitem value="Guardar" icon="ui-icon-disk fa fa-save Fs14"/>
+                       <p:separator />
+                       <p:menuitem value="Cancelar" outcome="/admin/customers/view" icon="ui-icon-extlink fa fa-external-link Fs14"/>
+                   </p:menuButton>
 				</p:panel>
 			  </h:form>	
 			</div>

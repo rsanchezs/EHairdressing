@@ -23,7 +23,7 @@
 								<p:growl id="msgs" showDetail="true"/>
 								<p:dataTable id="customersDT" var="customer"
 									value="#{customerView.customers}" selectionMode="single"
-									selection="#{customerView.customer}" rowKey="#{customer.id}"
+									selection="#{customerView.selectedCustomer}" rowKey="#{customer.id}"
 									rows="10" paginator="true"
 									paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 									rowsPerPageTemplate="5,10,15"
@@ -86,46 +86,46 @@
 									hideEffect="fade" resizable="false">
 									<p:outputPanel id="customerDetail" style="text-align:center;">
 										<p:panelGrid columns="2"
-											rendered="#{not empty customerView.customer}">
+											rendered="#{not empty customerView.selectedCustomer}">
 											<h:outputText class="FontBold" value="#{i18n.customerId}:" />
-											<h:outputText value="#{customerView.customer.id}" />
+											<h:outputText value="#{customerView.selectedCustomer.id}" />
 
 											<h:outputText class="FontBold" value="#{i18n.email}:" />
-											<h:outputText value="#{customerView.customer.username}" />
+											<h:outputText value="#{customerView.selectedCustomer.username}" />
 
 											<h:outputText class="FontBold" value="#{i18n.password}" />
-											<h:outputText value="#{customerView.customer.password}" />
+											<h:outputText value="#{customerView.selectedCustomer.password}" />
 
 											<h:outputText class="FontBold" value="#{i18n.customerName}" />
-											<h:outputText value="#{customerView.customer.name}" />
+											<h:outputText value="#{customerView.selectedCustomer.name}" />
 
 											<h:outputText class="FontBold" value="#{i18n.surname}" />
-											<h:outputText value="#{customerView.customer.surname}" />
+											<h:outputText value="#{customerView.selectedCustomer.surname}" />
 
 											<h:outputText class="FontBold" value="#{i18n.street}" />
-											<h:outputText value="#{customerView.customer.address.street}" />
+											<h:outputText value="#{customerView.selectedCustomer.address.street}" />
 
 											<h:outputText class="FontBold" value="#{i18n.city}" />
-											<h:outputText value="#{customerView.customer.address.city}" />
+											<h:outputText value="#{customerView.selectedCustomer.address.city}" />
 
 											<h:outputText class="FontBold" value="#{i18n.province}" />
-											<h:outputText value="#{customerView.customer.address.province}" />
+											<h:outputText value="#{customerView.selectedCustomer.address.province}" />
 
 											<h:outputText class="FontBold" value="#{i18n.zipcode}" />
-											<h:outputText value="#{customerView.customer.address.zipcode}" />
+											<h:outputText value="#{customerView.selectedCustomer.address.zipcode}" />
 
 											<h:outputText class="FontBold" value="#{i18n.birthday}" />
-											<h:outputText value="#{customerView.customer.dateOfBirth}">
+											<h:outputText value="#{customerView.selectedCustomer.dateOfBirth}">
 												<f:convertDateTime type="date"/>
 											</h:outputText>
 											<h:outputText class="FontBold" value="#{i18n.gender}" />
-											<h:outputText value="#{customerView.customer.gender}" />
+											<h:outputText value="#{customerView.selectedCustomer.gender}" />
 
 											<h:outputText class="FontBold" value="#{i18n.mobilephone}" />
-											<h:outputText value="#{customerView.customer.mobilePhone}" />
+											<h:outputText value="#{customerView.selectedCustomer.mobilePhone}" />
 
 											<h:outputText class="FontBold" value="#{i18n.creationDate}" />
-											<h:outputText value="#{customerView.customer.creationDate}">
+											<h:outputText value="#{customerView.selectedCustomer.creationDate}">
 												<f:convertDateTime type="date"/>
 											</h:outputText>
 										</p:panelGrid>
@@ -138,21 +138,21 @@
 									minimizable="true" maximizable="true" width="500" height="400">
 									<p:outputPanel id="customerEditDetail" style="text-align:center;">
 										<p:panelGrid columns="2" 
-											rendered="#{not empty customerView.customer}">
+											rendered="#{not empty customerView.selectedCustomer}">
 											<h:outputText class="FontBold" value="#{i18n.customerId}:" />
-											<p:inputText value="#{customerView.customer.id}" readonly="true" disabled="false" />
+											<p:inputText value="#{customerView.selectedCustomer.id}" readonly="true" disabled="false" />
 											
 											<h:outputText class="FontBold" value="#{i18n.email}:" />
-											<p:inputText value="#{customerView.customer.username}" size="20"/>
+											<p:inputText value="#{customerView.selectedCustomer.username}" size="20"/>
 
 											<h:outputText class="FontBold" value="#{i18n.password}" />
-											<p:inputText value="#{customerView.customer.password}" />
+											<p:inputText value="#{customerView.selectedCustomer.password}" />
 
 											<h:outputText class="FontBold" value="#{i18n.customerName}" />
-											<p:inputText value="#{customerView.customer.name}" />
+											<p:inputText value="#{customerView.selectedCustomer.name}" />
 
 											<h:outputText class="FontBold" value="#{i18n.surname}" />
-											<p:inputText value="#{customerView.customer.surname}" />
+											<p:inputText value="#{customerView.selectedCustomer.surname}" />
 
 											<h:outputText class="FontBold" value="#{i18n.street}" />
 											<p:inputText value="#{customerView.address.street}" />
@@ -167,18 +167,18 @@
 											<p:inputText value="#{customerView.address.zipcode}" />
 
 											<h:outputText class="FontBold" value="#{i18n.birthday}" />
-											<p:inputText value="#{customerView.customer.dateOfBirth}">
+											<p:inputText value="#{customerView.selectedCustomer.dateOfBirth}">
 												<f:convertDateTime type="date"/>
 											</p:inputText>
 											
 											<h:outputText class="FontBold" value="#{i18n.gender}" />
-											<p:inputText value="#{customerView.customer.gender}"/>
+											<p:inputText value="#{customerView.selectedCustomer.gender}"/>
 												
 											<h:outputText class="FontBold" value="#{i18n.mobilephone}" />
-											<p:inputText value="#{customerView.customer.mobilePhone}" />
+											<p:inputText value="#{customerView.selectedCustomer.mobilePhone}" />
 
 											<h:outputText class="FontBold" value="#{i18n.creationDate}" />
-											<p:inputText value="#{customerView.customer.creationDate}">
+											<p:inputText value="#{customerView.selectedCustomer.creationDate}">
 												<f:convertDateTime type="date"/>
 											</p:inputText>
 											<f:facet name="footer">

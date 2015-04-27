@@ -37,12 +37,14 @@ import static javax.persistence.CascadeType.REMOVE;
 @Entity
 @NamedQueries({
 		@NamedQuery(name = "Customer.findAll", query = "SELECT c FROM Customer c"),
-		@NamedQuery(name = "Customer.getBirthDay", query = "SELECT c.dateOfBirth FROM Customer c WHERE c.id = :id") })
+		@NamedQuery(name = "Customer.getBirthDay", query = "SELECT c.dateOfBirth FROM Customer c WHERE c.id = :id"),
+		@NamedQuery(name = "Customer.countCustomerTotal", query ="SELECT COUNT(c) FROM Customer c") })
 public class Customer implements Serializable {
 
 	public static final String FIND_ALL = "Customer.findAll";
 	public static final String GET_BIRTHDAY = "Customer.getBirthDay";
-
+	public static final String COUNT_TOTAL = "Customer.countCustomerTotal";
+	
 	private static final long serialVersionUID = 1L;
 
 	private Long id;

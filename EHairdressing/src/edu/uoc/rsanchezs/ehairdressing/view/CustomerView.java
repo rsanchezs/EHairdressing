@@ -26,7 +26,9 @@ public class CustomerView extends AbstractBean implements Serializable {
 	@Inject
 	private CustomerService customerService;
 	
+	
 	private Customer customer = new Customer();
+	private Customer selectedCustomer = new Customer();
 	private Address address = new Address();
 	private List<Customer> customers = new ArrayList<Customer>();
 	
@@ -53,6 +55,20 @@ public class CustomerView extends AbstractBean implements Serializable {
 	 */
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
+	}
+
+	/**
+	 * @return the selectedCustomer
+	 */
+	public Customer getSelectedCustomer() {
+		return selectedCustomer;
+	}
+
+	/**
+	 * @param selectedCustomer the selectedCustomer to set
+	 */
+	public void setSelectedCustomer(Customer selectedCustomer) {
+		this.selectedCustomer = selectedCustomer;
 	}
 
 	/**
@@ -84,18 +100,18 @@ public class CustomerView extends AbstractBean implements Serializable {
 	}
 
 	public String doCreateCustomer() {
-		customer=customerService.createCustomer(customer);
-		return "view";
+		customerService.createCustomer(customer);
+		return "/admin/customers/view?faces-redirect=true";
 	}
 	
 	public String doDeleteCustomer() {
-		customerService.remove(customer);
+		customerService.remove(selectedCustomer);
 		return "/admin/customers/view?faces-redirect=true";
 	}
 	
 	
 	public String doUpdateCustomer() {
-		customerService.merge(customer);
+		customerService.merge(selectedCustomer);
 		return "/admin/customers/view?faces-redirect=true";
 	}
 	

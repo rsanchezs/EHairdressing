@@ -62,12 +62,21 @@
 							<h:outputText styleClass="FontLight Fs18"  value="Recibir boletín informativo" />
 							<p:inputSwitch />
 						</p:panelGrid>
+						<f:facet name="footer">
 						  <p:menuButton value="Opciones">
 	                            <p:menuitem value="Guardar" action="#{customerView.doCreateCustomer()}" icon="ui-icon-disk fa fa-save Fs14"/>
 	                            <p:separator />
 	                            <p:menuitem value="Cancelar" outcome="/admin/customers/view" icon="ui-icon-extlink fa fa-external-link Fs14"/>
 	                      </p:menuButton>
+	                     </f:facet>
 				</p:panel>
+				<f:facet name="footer">
+				  <p:menuButton value="Opciones">
+                       <p:menuitem value="Guardar" action="#{customerView.doCreateCustomer()}" icon="ui-icon-disk fa fa-save Fs14"/>
+                       <p:separator />
+                       <p:menuitem value="Cancelar" outcome="/admin/customers/view" icon="ui-icon-extlink fa fa-external-link Fs14"/>
+                   </p:menuButton>
+	             </f:facet>
 			  </h:form>	
 			</div>
 		</div>
