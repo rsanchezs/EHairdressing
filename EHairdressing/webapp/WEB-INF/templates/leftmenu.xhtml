@@ -20,8 +20,8 @@
         <ps:menu id="sm_leftmenu">
             <p:menuitem id="sm_dashboard" value="#{i18n.dashboard}" icon="icon-home-outline" outcome="empty-page" containerStyleClass="layout-menubar-active"/>
             <p:submenu id="sm_schedule" label="#{i18n.schedule}" icon="icon-calendar">
-                <p:menuitem id="sm_schedule_general" value="#{i18n.schedule_general}" icon="icon-calendar-empty" outcome="/admin/schedule/generalSchedule"/>
-                <p:menuitem id="sm_schedule_appointment" value="#{i18n.schedule_appointment}" icon="icon-calendar-2" outcome="empty-page"/>
+                <p:menuitem id="sm_schedule_general" value="#{i18n.schedule_general}" icon="icon-calendar-empty" outcome="/admin/schedule/general"/>
+                <p:menuitem id="sm_schedule_appointment" value="#{i18n.schedule_appointment}" icon="icon-calendar-2" outcome="/admin/schedule/appointment"/>
             </p:submenu>
             <p:submenu id="sm_email" label="#{i18n.email}" icon="icon-mail-2"> 
                    <p:menuitem id="sm_new_email" value="#{i18n.new}" icon="icon-pencil-2" outcome="/admin/email/create"/>
