@@ -30,8 +30,8 @@ public class CustomerView extends AbstractBean implements Serializable {
 	
 	private Customer customer;
 	private Customer selectedCustomer;
-	private Address address = new Address();
-	private List<Customer> customers = new ArrayList<Customer>();
+	private Address address;
+	private List<Customer> customers;
 	
 	
 	
@@ -41,9 +41,11 @@ public class CustomerView extends AbstractBean implements Serializable {
 	
 	@PostConstruct
 	public void init() {
+		customers = new ArrayList<Customer>();
 		customers = customerService.findAllCustomers();
 		customer = new Customer();
 		selectedCustomer = new Customer();
+		address = new Address();
 	}
 
 	/**
@@ -103,6 +105,7 @@ public class CustomerView extends AbstractBean implements Serializable {
 	}
 
 	public String doCreateCustomer() {
+		customer.setAddress(address);
 		customerService.createCustomer(customer);
 		return "/admin/customers/view?faces-redirect=true";
 	}

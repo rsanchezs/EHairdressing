@@ -34,7 +34,7 @@
 	                    <p:inputText styleClass="Wid90 FontLight Fs16" placeholder="Apellidos" value="#{customerView.customer.surname}"/>
 	                    <p:inputText styleClass="Wid90 FontLight Fs16" placeholder="Teléfono móvil" value="#{customerView.customer.mobilePhone}"/>
 	                    <p:calendar styleClass="FontLight Fs16" id="age" showOn="button" placeholder="Fecha Nacimiento"  value="#{customerView.customer.dateOfBirth}">
-	                    	<f:convertDateTime type="time"/>
+	                    	<f:convertDateTime type="time" pattern="dd/MM/yy"/>
 	                    </p:calendar>
 	                    <p:selectOneMenu id="gender" value="#{customerView.customer.gender}"  styleClass="FontLight Fs16" style="min-width:200px; width:315px;">
 	                        <f:selectItem styleClass="Wid90 FontLight Fs16" itemLabel="Seleccionar sexo" itemValue="" />
