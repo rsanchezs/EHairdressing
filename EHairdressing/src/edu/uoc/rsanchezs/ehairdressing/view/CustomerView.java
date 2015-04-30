@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -27,8 +28,8 @@ public class CustomerView extends AbstractBean implements Serializable {
 	private CustomerService customerService;
 	
 	
-	private Customer customer = new Customer();
-	private Customer selectedCustomer = new Customer();
+	private Customer customer;
+	private Customer selectedCustomer;
 	private Address address = new Address();
 	private List<Customer> customers = new ArrayList<Customer>();
 	
@@ -41,6 +42,8 @@ public class CustomerView extends AbstractBean implements Serializable {
 	@PostConstruct
 	public void init() {
 		customers = customerService.findAllCustomers();
+		customer = new Customer();
+		selectedCustomer = new Customer();
 	}
 
 	/**

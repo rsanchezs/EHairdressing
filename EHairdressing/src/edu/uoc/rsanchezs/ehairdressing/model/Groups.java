@@ -13,7 +13,7 @@ import static javax.persistence.CascadeType.MERGE;
 import static javax.persistence.CascadeType.REMOVE;
 
 /**
- * Entity implementation class for Entity: Group
+ * Entity implementation class for Entity: Groups
  *
  */
 @Entity
@@ -38,6 +38,7 @@ public class Groups implements Serializable {
 	 */
 	@Id
 	@GeneratedValue(strategy=AUTO)
+	@Column(name = "GROUP_ID")
 	public Long getId() {
 		return id;
 	}
@@ -46,6 +47,7 @@ public class Groups implements Serializable {
 	/**
 	 * @return the name
 	 */
+	@Column(name = "GROUP_NAME")
 	public String getName() {
 		return name;
 	}
@@ -63,9 +65,7 @@ public class Groups implements Serializable {
 	 * @return the customers
 	 */
 	@ManyToMany(cascade = { PERSIST, MERGE, REMOVE })
-	@JoinTable(name = "group_user", 
-	joinColumns = @JoinColumn(name = "group_fk", referencedColumnName = "id"), 
-	inverseJoinColumns = @JoinColumn(name = "user_fk", referencedColumnName = "id"))
+	@JoinTable(name = "USERS_GROUPS", joinColumns = @JoinColumn(name = "GROUP_ID", referencedColumnName = "GROUP_ID"), inverseJoinColumns = @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID"))
 	public List<Customer> getUsers() {
 		return customers;
 	}

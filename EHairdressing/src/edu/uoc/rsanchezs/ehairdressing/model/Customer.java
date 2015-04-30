@@ -69,6 +69,7 @@ public class Customer implements Serializable {
 	 */
 	@Id
 	@GeneratedValue(strategy = SEQUENCE)
+	@Column(name = "USER_ID")
 	public Long getId() {
 		return id;
 	}
@@ -143,7 +144,7 @@ public class Customer implements Serializable {
 	}
 
 	/**
-	 * @return the groups
+	 * @return the group
 	 */
 	@ManyToMany(mappedBy = "users", cascade = { PERSIST, MERGE, REMOVE })
 	public List<Groups> getGroups() {
@@ -247,8 +248,8 @@ public class Customer implements Serializable {
 	}
 
 	/**
-	 * @param groups
-	 *            the groups to set
+	 * @param group
+	 *            the group to set
 	 */
 	public void setGroups(List<Groups> groups) {
 		this.groups = groups;
@@ -279,30 +280,30 @@ public class Customer implements Serializable {
 		age = now.get(Calendar.YEAR) - birth.getMaximum(Calendar.YEAR) + adjust;
 		
 	}
-	/**
-	 * Method to return the day of the month that the customer was born
-	 * @return String representing the day of the month
-	 */
-
-	public @NotNull String getBirthDay() {
-
-		Calendar birthDay = new GregorianCalendar();
-		birthDay.setTime(dateOfBirth);
-		return Integer.toString( birthDay.get(Calendar.DAY_OF_MONTH));
-	}
-	
-	/**
-	 * Method to return the month that the customer was born
-	 * @return String representing the month
-	 */
-	
-	public @NotNull String getBirthMonth() {
-		
-		Calendar birthMonth = new GregorianCalendar();
-		birthMonth.setTime(dateOfBirth);
-		return Integer.toString( birthMonth.get(Calendar.MONTH));
-	}
-	
+//	/**
+//	 * Method to return the day of the month that the customer was born
+//	 * @return String representing the day of the month
+//	 */
+//
+//	public @NotNull String getBirthDay() {
+//
+//		Calendar birthDay = new GregorianCalendar();
+//		birthDay.setTime(dateOfBirth);
+//		return Integer.toString( birthDay.get(Calendar.DAY_OF_MONTH));
+//	}
+//	
+//	/**
+//	 * Method to return the month that the customer was born
+//	 * @return String representing the month
+//	 */
+//	
+//	public @NotNull String getBirthMonth() {
+//		
+//		Calendar birthMonth = new GregorianCalendar();
+//		birthMonth.setTime(dateOfBirth);
+//		return Integer.toString( birthMonth.get(Calendar.MONTH));
+//	}
+//	
 	
 
 }

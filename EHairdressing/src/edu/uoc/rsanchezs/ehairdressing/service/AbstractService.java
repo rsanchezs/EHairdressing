@@ -2,10 +2,12 @@ package edu.uoc.rsanchezs.ehairdressing.service;
 
 import java.util.List;
 
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import javax.servlet.http.HttpServletRequest;
 
 import edu.uoc.rsanchezs.ehairdressing.util.EHairdressingPU;
 
@@ -102,5 +104,16 @@ public abstract class AbstractService<T> {
 		Query query = em.createNamedQuery(namedQueryName);
 		Number result = (Number) query.getSingleResult();
 		return result.intValue();
+	}
+	
+	public FacesContext getContextWrapper(){
+		FacesContext context = FacesContext.getCurrentInstance();
+		return context;
+	}
+	
+	public HttpServletRequest getRequestWrapper() {
+		HttpServletRequest request = (HttpServletRequest) getContextWrapper().
+				getExternalContext().getRequest();
+		return request;
 	}
 }

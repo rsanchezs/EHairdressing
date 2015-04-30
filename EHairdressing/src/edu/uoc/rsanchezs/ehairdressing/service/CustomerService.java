@@ -16,7 +16,6 @@ import javax.ejb.Timer;
 import javax.ejb.TimerConfig;
 import javax.ejb.TimerService;
 import javax.inject.Named;
-import javax.persistence.TypedQuery;
 import javax.validation.constraints.NotNull;
 
 import edu.uoc.rsanchezs.ehairdressing.model.Customer;
@@ -55,11 +54,11 @@ public class CustomerService extends AbstractService<Customer> implements Serial
     public @NotNull Customer createCustomer(@NotNull Customer customer){
     	em.persist(customer);
     	
-    	ScheduleExpression birthday = new ScheduleExpression().
+    	/*ScheduleExpression birthday = new ScheduleExpression().
     			dayOfMonth(customer.getBirthDay()).
     			month(customer.getBirthMonth());
     	
-    	timerService.createCalendarTimer(birthday, new TimerConfig(customer, true));
+    	timerService.createCalendarTimer(birthday, new TimerConfig(customer, true));*/
     	
     	return customer;
     }
