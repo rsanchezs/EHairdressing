@@ -1,5 +1,8 @@
 package edu.uoc.rsanchezs.ehairdressing.model;
 
+import static javax.persistence.CascadeType.MERGE;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.CascadeType.REMOVE;
 import static javax.persistence.GenerationType.SEQUENCE;
 
 import java.io.Serializable;
@@ -25,10 +28,6 @@ import javax.persistence.PostUpdate;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
-import javax.validation.constraints.NotNull;
-import static javax.persistence.CascadeType.PERSIST;
-import static javax.persistence.CascadeType.MERGE;
-import static javax.persistence.CascadeType.REMOVE;
 
 /**
  * Entity implementation class for Entity: Customer
@@ -54,6 +53,7 @@ public class Customer implements Serializable {
 	private String surname;
 	private String mobilePhone;
 	private Date dateOfBirth;
+	private String birthday;
 	private Integer age;
 	private Date creationDate;
 	private Gender gender;
@@ -154,9 +154,23 @@ public class Customer implements Serializable {
 	/**
 	 * @return the mobilePhone
 	 */
-	@Column(length = 9)
 	public String getMobilePhone() {
 		return mobilePhone;
+	}
+
+	/**
+	 * @return the birthday
+	 */
+	
+	public String getBirthday() {
+		return birthday;
+	}
+
+	/**
+	 * @param birthday the birthday to set
+	 */
+	public void setBirthday(String birthday) {
+		this.birthday = birthday;
 	}
 
 	/**
@@ -304,6 +318,19 @@ public class Customer implements Serializable {
 //		return Integer.toString( birthMonth.get(Calendar.MONTH));
 //	}
 //	
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Customer [id=" + id + ", password=" + password + ", username="
+				+ username + ", name=" + name + ", surname=" + surname
+				+ ", mobilePhone=" + mobilePhone + ", dateOfBirth="
+				+ dateOfBirth + ", birthday=" + birthday + ", age=" + age
+				+ ", creationDate=" + creationDate + ", gender=" + gender
+				+ ", address=" + address + ", groups=" + groups + "]";
+	}
 	
 
 }

@@ -1,0 +1,53 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ps="http://primefaces.org/sentinel"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
+   
+	<div id="layout-menubar" class="Unselectable fontRegular">
+        <div class="layout-menubarinner-box" id="buttonArea">
+            <a href="#" id="layout-menubar-resize" class="BordRad3" title="Menu Resize"><i class="icon-th-list-2"></i></a>
+            <a href="#" id="layout-menubar-resize2" class="BordRad3" title="Open Menu"><i class="icon-menu"></i></a>
+        </div>
+
+        <div class="layout-menubarinner-box" id="searchArea">
+            <i class="icon-search floatLeft gray"></i>
+            <input type="text" class="layout-menubar-search floatLeft Animated05" placeholder="#{i18n.search_here}"/>
+        </div>
+		<h:form id="sm_form">
+        <ps:menu id="sm_leftmenu">
+            <p:menuitem id="sm_dashboard" value="#{i18n.dashboard}" icon="icon-home-outline" outcome="/dashboard" containerStyleClass="layout-menubar-active"/>
+            <p:submenu id="sm_schedule" label="#{i18n.schedule}" icon="icon-calendar">
+                <p:menuitem id="sm_schedule_general" value="#{i18n.schedule_general}" icon="icon-calendar-empty" outcome="/admin/schedule/general"/>
+                <p:menuitem id="sm_schedule_appointment" value="#{i18n.schedule_appointment}" icon="icon-calendar-2" outcome="/admin/schedule/appointment"/>
+            </p:submenu>
+            <p:submenu id="sm_email" label="#{i18n.email}" icon="icon-mail-2"> 
+                   <p:menuitem id="sm_new_email" value="#{i18n.new}" icon="icon-pencil-2" outcome="/admin/email/create"/>
+                   <p:menuitem id="sm_saved_email" value="#{i18n.saved}" icon="icon-floppy" outcome="empty-page.xhtml" />
+                   <p:menuitem id="sm_send_email" value="#{i18n.send}" icon="icon-upload-2" outcome="empty-page.xhtml" />
+                   <p:menuitem id="sm_state_email" value="#{i18n.state}" icon="icon-history" outcome="empty-page.xhtml"/>
+            </p:submenu>
+             <p:submenu id="sm_sms" label="#{i18n.sms}" icon="icon-chat-2"> 
+                   <p:menuitem id="sm_new_sms" value="#{i18n.new}" icon="icon-pencil-2" outcome="/admin/sms/create"/>
+                   <p:menuitem id="sm_saved_sms" value="#{i18n.saved}" icon="icon-floppy" outcome="empty-page.xhtml" />
+                   <p:menuitem id="sm_send_sms" value="#{i18n.send}" icon="icon-upload-2" outcome="empty-page.xhtml" />
+                   <p:menuitem id="sm_state_sms" value="#{i18n.state}" icon="icon-history" outcome="empty-page.xhtml" />
+            </p:submenu>
+            <p:submenu id="sm_maintence" label="#{i18n.maintance}" icon="icon-wrench-1" >
+                <p:menuitem id="sm_customers" value="#{i18n.customers}" icon="icon-user" outcome="/admin/customers/view"/>
+                <p:menuitem id="sm_services" value="#{i18n.services}" icon="icon-ruler" outcome="empty-page"/>   
+            </p:submenu>
+            <p:menuitem id="sm_user_profile" value="#{i18n.user_profile}" icon="icon-vcard" outcome="empty-page" />
+            <p:submenu id="sm_system_settings" label="#{i18n.system_settings}" icon="icon-cog-2"> 
+                   <p:menuitem id="sm_buy_credits" value="#{i18n.buy_credits}" icon="icon-pencil-2" outcome="empty-page.xhtml"/>   
+            </p:submenu>
+         
+            <p:menuitem id="sm_log_out" value="#{i18n.log_out}" icon="icon-logout-1" action="#{loginService.logout()}"/>
+        </ps:menu>
+        </h:form>
+    </div>
+
+
+</ui:composition>

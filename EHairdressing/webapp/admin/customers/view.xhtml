@@ -16,11 +16,11 @@
 		<div class="Container100">
 			<div class="ContainerIndent">
 				<p:panel>
-					<span class="FontBold Fs18 hardblue Container100">#{i18n.customers}</span>
+					<span class="FontBold Fs18 hardblue Container90">#{i18n.customers}</span>
 					<div class="Container100">
 						<div class="ContainerIndent">
-							<h:form id="form">
-								<p:growl id="msgs" showDetail="true"/>
+							<h:form id="form_cs">
+								<p:growl id="messages" showDetail="true"/>
 								<p:dataTable id="customersDT" var="customer"
 									value="#{customerView.customers}" selectionMode="single"
 									selection="#{customerView.selectedCustomer}" rowKey="#{customer.id}"
@@ -45,10 +45,8 @@
 										<h:outputText value="#{customer.surname}" />
 									</p:column>
 									<p:column headerText="#{i18n.birthday}"
-										sortBy="#{customer.dateOfBirth}">
-										<h:outputText value="#{customer.dateOfBirth}">
-											<f:convertDateTime type="date"/>
-										</h:outputText>
+										sortBy="#{customer.birthday}">
+										<h:outputText value="#{customer.birthday}" />
 									</p:column>
 									<p:column headerText="#{i18n.email}"
 										sortBy="#{customer.username}">
@@ -60,11 +58,11 @@
 									</p:column>
 									<f:facet name="footer">
 										<p:splitButton value="#{i18n.view}" process="customersDT"
-												update=":form:customerDetail"
+												update=":form_cs:customerDetail"
 												oncomplete="PF('customerDialog').show()">
 											
 											<p:menuitem value="#{i18n.update}" process="customersDT"
-											update=":form:customerEditDetail"
+											update=":form_cs:customerEditDetail"
 											oncomplete="PF('customerEditDialog').show()"
 											icon="ui-icon-arrowrefresh-1-w fa fa-repeat Fs14"/>
 											
@@ -115,7 +113,7 @@
 											<h:outputText value="#{customerView.selectedCustomer.address.zipcode}" />
 
 											<h:outputText class="FontBold" value="#{i18n.birthday}" />
-											<h:outputText value="#{customerView.selectedCustomer.dateOfBirth}">
+											<h:outputText value="#{customerView.selectedCustomer.birthday}">
 												<f:convertDateTime type="date"/>
 											</h:outputText>
 											<h:outputText class="FontBold" value="#{i18n.gender}" />
@@ -196,7 +194,19 @@
 				</p:panel>
 			</div>
 		</div>
+		<div class="EmptyBox10"/>
+		<div class="ContainerIndent">
+            <p:panel header="Importar archivos">
+                <div class="ContainerIndent">
 
+                    <h3 class="hardblue">Importar archivos clientes</h3>
+                   		<h:form>
+                        <p:fileUpload  fileUploadListener="#{customerView.handleFileUpload}" label="Buscar" uploadLabel="Subir" cancelLabel="Cancelar" mode="advanced" dragDropSupport="false"
+                                      multiple="true" update=":form_cs:messages :form_cs:customersDT" process=":form_cs:customersDT" sizeLimit="100000" fileLimit="3" allowTypes="/(\.|\/)(csv)$/" />
+						</h:form>
+                </div>
+            </p:panel>
+        </div>
 	</ui:define>
 
 </ui:composition>

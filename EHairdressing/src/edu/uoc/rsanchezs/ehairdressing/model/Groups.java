@@ -11,6 +11,7 @@ import static javax.persistence.GenerationType.AUTO;
 import static javax.persistence.CascadeType.PERSIST;
 import static javax.persistence.CascadeType.MERGE;
 import static javax.persistence.CascadeType.REMOVE;
+import static javax.persistence.GenerationType.SEQUENCE;
 
 /**
  * Entity implementation class for Entity: Groups
@@ -37,7 +38,7 @@ public class Groups implements Serializable {
 	 * @return the id
 	 */
 	@Id
-	@GeneratedValue(strategy=AUTO)
+	@GeneratedValue(strategy=SEQUENCE)
 	@Column(name = "GROUP_ID")
 	public Long getId() {
 		return id;
