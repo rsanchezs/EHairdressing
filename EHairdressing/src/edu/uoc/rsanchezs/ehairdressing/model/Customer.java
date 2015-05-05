@@ -1,25 +1,14 @@
 package edu.uoc.rsanchezs.ehairdressing.model;
 
-import static javax.persistence.CascadeType.MERGE;
-import static javax.persistence.CascadeType.PERSIST;
-import static javax.persistence.CascadeType.REMOVE;
-import static javax.persistence.GenerationType.SEQUENCE;
-
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.List;
 
-import javax.persistence.Column;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.PostLoad;
@@ -38,7 +27,7 @@ import javax.persistence.Transient;
 		@NamedQuery(name = "Customer.findAll", query = "SELECT c FROM Customer c"),
 		@NamedQuery(name = "Customer.getBirthDay", query = "SELECT c.dateOfBirth FROM Customer c WHERE c.id = :id"),
 		@NamedQuery(name = "Customer.countCustomerTotal", query ="SELECT COUNT(c) FROM Customer c") })
-public class Customer implements Serializable {
+public class Customer extends User implements Serializable {
 
 	public static final String FIND_ALL = "Customer.findAll";
 	public static final String GET_BIRTHDAY = "Customer.getBirthDay";
@@ -46,48 +35,22 @@ public class Customer implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 
-	private Long id;
-	private String password;
-	private String username;
 	private String name;
 	private String surname;
 	private String mobilePhone;
 	private Date dateOfBirth;
 	private String birthday;
 	private Integer age;
-	private Date creationDate;
 	private Gender gender;
+	private Profile profile;
+	private Date creationDate = new Date();
 	private Address address = new Address();
-	private List<Groups> groups = new ArrayList<Groups>();
+	
 
 	public Customer() {
 		super();
 	}
 
-	/**
-	 * @return the id
-	 */
-	@Id
-	@GeneratedValue(strategy = SEQUENCE)
-	@Column(name = "USER_ID")
-	public Long getId() {
-		return id;
-	}
-
-	/**
-	 * @return the password
-	 */
-	@Column(length = 32)
-	public String getPassword() {
-		return password;
-	}
-
-	/**
-	 * @return the username
-	 */
-	public String getUsername() {
-		return username;
-	}
 
 	/**
 	 * @return the name
@@ -144,14 +107,6 @@ public class Customer implements Serializable {
 	}
 
 	/**
-	 * @return the group
-	 */
-	@ManyToMany(mappedBy = "users", cascade = { PERSIST, MERGE, REMOVE })
-	public List<Groups> getGroups() {
-		return groups;
-	}
-
-	/**
 	 * @return the mobilePhone
 	 */
 	public String getMobilePhone() {
@@ -179,30 +134,6 @@ public class Customer implements Serializable {
 	 */
 	public void setMobilePhone(String mobilePhone) {
 		this.mobilePhone = mobilePhone;
-	}
-
-	/**
-	 * @param id
-	 *            the id to set
-	 */
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	/**
-	 * @param password
-	 *            the password to set
-	 */
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	/**
-	 * @param username
-	 *            the username to set
-	 */
-	public void setUsername(String username) {
-		this.username = username;
 	}
 
 	/**
@@ -260,14 +191,17 @@ public class Customer implements Serializable {
 	public void setGender(Gender gender) {
 		this.gender = gender;
 	}
+	
 
-	/**
-	 * @param group
-	 *            the group to set
-	 */
-	public void setGroups(List<Groups> groups) {
-		this.groups = groups;
+	public Profile getProfile() {
+		return profile;
 	}
+
+
+	public void setProfile(Profile profile) {
+		this.profile = profile;
+	}
+
 
 	/**
 	 * Method that calculate the age of a Customer
@@ -319,18 +253,5 @@ public class Customer implements Serializable {
 //	}
 //	
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
-		return "Customer [id=" + id + ", password=" + password + ", username="
-				+ username + ", name=" + name + ", surname=" + surname
-				+ ", mobilePhone=" + mobilePhone + ", dateOfBirth="
-				+ dateOfBirth + ", birthday=" + birthday + ", age=" + age
-				+ ", creationDate=" + creationDate + ", gender=" + gender
-				+ ", address=" + address + ", groups=" + groups + "]";
-	}
-	
 
 }

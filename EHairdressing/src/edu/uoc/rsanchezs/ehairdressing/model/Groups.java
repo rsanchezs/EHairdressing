@@ -26,7 +26,7 @@ public class Groups implements Serializable {
 	private Long id;
 	private String name;
 	private String description;
-	private List<Customer> customers = new ArrayList<Customer>();
+	private List<User> users = new ArrayList<User>();
 	
 
 	public Groups() {
@@ -67,8 +67,8 @@ public class Groups implements Serializable {
 	 */
 	@ManyToMany(cascade = { PERSIST, MERGE, REMOVE })
 	@JoinTable(name = "USERS_GROUPS", joinColumns = @JoinColumn(name = "GROUP_ID", referencedColumnName = "GROUP_ID"), inverseJoinColumns = @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID"))
-	public List<Customer> getUsers() {
-		return customers;
+	public List<User> getUsers() {
+		return users;
 	}
 
 
@@ -99,8 +99,8 @@ public class Groups implements Serializable {
 	/**
 	 * @param customers the customers to set
 	 */
-	public void setUsers(List<Customer> customers) {
-		this.customers = customers;
+	public void setUsers(List<User> users) {
+		this.users = users;
 	}   
 	
 	
