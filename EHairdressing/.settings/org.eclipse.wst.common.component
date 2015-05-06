@@ -5,16 +5,28 @@
         <dependent-module archiveName="sentinel-theme-1.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/C:/Users/Rubén/Desktop/sentinel-layout-1.1/sentinel-theme-1.1.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="primefaces-5.2-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/C:/Users/Rubén/Desktop/primefaces-5.2-SNAPSHOT.jar">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
-        <dependent-module archiveName="opencsv-3.3.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/C:/Users/Rubén/Downloads/opencsv-3.3.jar">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
         <dependent-module archiveName="commons-io-2.4.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/C:/Users/Rubén/Downloads/commons-io-2.4-bin/commons-io-2.4/commons-io-2.4.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <dependent-module archiveName="commons-fileupload-1.3.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/C:/Users/Rubén/Downloads/commons-fileupload-1.3.1-bin/commons-fileupload-1.3.1-bin/lib/commons-fileupload-1.3.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="opencsv-3.3.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/C:/Users/Rubén/Desktop/lib/opencsv-3.3.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="primefaces-5.2-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/C:/Users/Rubén/Desktop/lib/primefaces-5.2-SNAPSHOT.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="commons-lang3-3.4.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/C:/Users/Rubén/Desktop/lib/commons-lang3-3.4.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="gson-2.3.1.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/C:/Users/Rubén/Desktop/lib/gson-2.3.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="primefaces-extensions-3.1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/C:/Users/Rubén/Desktop/lib/primefaces-extensions-3.1.0.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="resources-ckeditor-3.1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/classpath/lib/C:/Users/Rubén/Desktop/lib/resources-ckeditor-3.1.0.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <property name="context-root" value="EHairdressing"/>

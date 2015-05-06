@@ -10,6 +10,7 @@ import java.util.List;
 import javax.persistence.*;
 import static javax.persistence.TemporalType.TIME;
 import static javax.persistence.GenerationType.SEQUENCE;
+import static javax.persistence.TemporalType.DATE;
 
 /**
  * Entity implementation class for Entity: SMS
@@ -58,7 +59,6 @@ public class SMS implements Serializable {
 		this.administrativeNote = administrativeNote;
 	}
 	@ElementCollection
-	@CollectionTable(name = "Tags")
 	@Column(name = "Value")
 	public List<String> getTags() {
 		return this.tags;
@@ -81,11 +81,11 @@ public class SMS implements Serializable {
 	public void setCustomers(List<Customer> customers) {
 		this.customers = customers;
 	}
-	@Temporal(TIME)
+	@Temporal(DATE)
 	public Date getCreationDate() {
 		return creationDate;
 	}
-	@Temporal(TIME)
+	@Temporal(DATE)
 	public Date getSendDate() {
 		return sendDate;
 	}

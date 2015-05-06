@@ -11,6 +11,8 @@ import javax.persistence.*;
 
 import static javax.persistence.GenerationType.SEQUENCE;
 import static javax.persistence.TemporalType.TIME;
+import static javax.persistence.TemporalType.TIMESTAMP;
+import static javax.persistence.TemporalType.DATE;
 
 
 /**
@@ -18,16 +20,18 @@ import static javax.persistence.TemporalType.TIME;
  *
  */
 @Entity
-
+@NamedNativeQuery(name = "Email.findAll", query = "SELECT e FROM Email e")
 public class Email implements Serializable {
 
+	public static final String FIND_ALL = "Email.findAll";
+	
 	private static final long serialVersionUID = 1L;
 	
 	private Long id;
 	private String subject;
 	private String administrativeNote;
 	private String body;
-	private Date creationDate;
+	private Date creationDate=new Date();
 	private Date sendDate;
 	
 	private List<Customer> customers = new ArrayList<Customer>();
@@ -60,7 +64,7 @@ public class Email implements Serializable {
 		this.administrativeNote = administrativeNote;
 	}   
 	@ElementCollection
-	@CollectionTable(name = "Tags")
+	@CollectionTable(name = "Email_Tags")
 	@Column(name = "Value")
 	public List<String> getTags() {
 		return this.tags;
@@ -83,11 +87,11 @@ public class Email implements Serializable {
 	public void setCustomers(List<Customer> customers) {
 		this.customers = customers;
 	}
-	@Temporal(TIME)
+	@Temporal(DATE)
 	public Date getCreationDate() {
 		return creationDate;
 	}
-	@Temporal(TIME)
+	@Temporal(DATE)
 	public Date getSendDate() {
 		return sendDate;
 	}
@@ -98,6 +102,12 @@ public class Email implements Serializable {
 		this.sendDate = sendDate;
 	}
 	
-	
+	/**
+	 * Adds a tag 
+	 * @param tag The tag to add
+	 */
+	public void add(String tag) {
+		tags.add(tag);
+	}	
    
 }

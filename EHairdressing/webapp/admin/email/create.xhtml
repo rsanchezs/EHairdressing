@@ -3,7 +3,8 @@
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui"
-                template="/WEB-INF/templates/template.xhtml">
+                template="/WEB-INF/templates/template.xhtml"
+                xmlns:pe="http://primefaces.org/ui/extensions">
                 
     <ui:define name="title">
 		Nuevo email
@@ -24,24 +25,32 @@
 					<div class="EmptyBox10"/> 
 					<p:panelGrid columns="1" layout="grid" style="border:0px none;background:none">
 						<p:outputLabel styleClass="FontNormal Fs16"  value="Asunto"/>
-	                    <p:inputText id="subject" styleClass="Wid80 FontLight Fs16" title="Introduce el asunto del mensaje (se muestra al destinatario)" value="" />
+	                    <p:inputText id="subject" styleClass="Wid80 FontLight Fs16" title="Introduce el asunto del mensaje (se muestra al destinatario)" value="#{emailView.email.subject}" />
 	                    <p:tooltip id="toolTipSubject" for="subject" showEvent="focus" hideEvent="blur" />
 	                    <p:outputLabel styleClass="FontNormal Fs16"  value="Notas administrativas"/>
-	                    <p:inputText id="note" styleClass="Wid80 FontLight Fs16"  title="Introduce notas administrativas (no se le muestra al destinatario)" value=""/> 
+	                    <p:inputText id="note" styleClass="Wid80 FontLight Fs16"  title="Introduce notas administrativas (no se le muestra al destinatario)" value="#{emailView.email.administrativeNote}"/> 
 	                    <p:tooltip id="toolTipNotes" for="note" showEvent="focus" hideEvent="blur" />
-	                    <p:outputLabel styleClass="FontNormal Fs16" value="Etiqueta"/>  
-	                    <p:inputText id="tag" styleClass="Wid80 FontLight Fs16" title="Tags son etiquetas que pueden ayudarte a agregar mensajes en categorias.Utiliza
-	                    las etiquetas para buscar mensajes o crear filtros.Puedes añadir varias etiquetas a cada mensaje" placeholder="Seleccionar una o más etiquetas" value="" />
-	                    <p:tooltip id="toolTipTags" for="tag" showEvent="focus" hideEvent="blur" />
-	                </p:panelGrid>
-	                <div class="EmptyBox30"/>
-	                <p:editor id="editor" widgetVar="editorWidget" value="#{editorView.text}" width="850" />
+	                    <p:outputLabel styleClass="FontNormal Fs16" value="Etiqueta" />  
+						 <p:selectOneMenu styleClass="Wid80 FontLight Fs16" id="tags" value="#{emailView.tag}" effect="fold" editable="true" style="min-width:200px; width:600px;"
+						 	title="Tags son etiquetas que pueden ayudarte a agregar mensajes en categorías.Utilizalas etiquetas para buscar mensajes o crear filtros.Puedes seleccionar
+						 	uno de la lista o crear uno nuevo">
+                            <f:selectItem styleClass="Wid80 FontNormal Fs16" itemValue="#{emailView.tag}" />
+                            <f:selectItems styleClass="Wid80 FontNormal Fs16" value="#{emailView.tags}" />
+                        </p:selectOneMenu>
+						<p:tooltip id="toolTipTags" for="tags" showEffect="clip" hideEffect="explode"/>
+					</p:panelGrid>
+	                <div class="EmptyBox20"/>
+	                	<pe:ckEditor id="editor" widgetVar="editorWidget" height="400" width="1024" theme="primefaces-sentinel" 
+	                	interfaceColor="#1070BF" skin="kama" value="#{emailView.email.body}">
+                  		</pe:ckEditor>
 	                <div class="EmptyBox20"/>
 	                 <p:menuButton value="Opciones">
-                       <p:menuitem value="Guardar" icon="ui-icon-disk fa fa-save Fs14"/>
+                       <p:menuitem value="Guardar" icon="ui-icon-disk fa fa-save Fs14" action="#{emailView.doCreateEmail()}"/>
                        <p:separator />
-                       <p:menuitem value="Cancelar" outcome="/admin/customers/view" icon="ui-icon-extlink fa fa-external-link Fs14"/>
+                       <p:menuitem value="Cancelar" outcome="/admin/email/create?faces-redirect=true" icon="ui-icon-extlink fa fa-external-link Fs14"/>
                    </p:menuButton>
+                 
+                   
 				</p:panel>
 			  </h:form>	
 			</div>
