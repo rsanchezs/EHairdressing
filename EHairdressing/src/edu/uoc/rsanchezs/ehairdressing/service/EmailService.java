@@ -4,11 +4,24 @@ package edu.uoc.rsanchezs.ehairdressing.service;
 import static edu.uoc.rsanchezs.ehairdressing.model.Email.FIND_ALL;
 
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import javax.annotation.Resource;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.inject.Named;
+import javax.mail.Address;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMessage.RecipientType;
 import javax.validation.constraints.NotNull;
 
 import edu.uoc.rsanchezs.ehairdressing.model.Email;
@@ -24,6 +37,12 @@ public class EmailService extends AbstractService<Email> implements Serializable
 	
     
 	private static final long serialVersionUID = 4385913416969452748L;
+	
+	@Resource(name="mail/EHairdressingMail")
+	private Session session;
+	
+	@Inject
+	private Logger logger;
 
 	/**
      * Default constructor. 
@@ -69,6 +88,30 @@ public class EmailService extends AbstractService<Email> implements Serializable
     public List<Email> findAllEmails(){
     	
     	return findWithNamedQuery(FIND_ALL);
+    }
+    
+    /**
+     * Sends an Internet email 
+     * @param email The email to send
+     * @param addresses Array addresses to send the message to
+     */
+    public void sendEmail(Email email, Address[] addresses) {
+    	Date sendDate = new Date();
+    	email.setSendDate(sendDate);
+    	Message msg = new MimeMessage(session);
+   
+    	try {
+    		msg.setSubject(email.getSubject());
+    		msg.setRecipients(RecipientType.TO, addresses);
+    		msg.setText(email.getBody());
+    		msg.setContent(email.getBody(),"text/html; charset=utf-8" );
+    		Transport.send(msg);
+    		
+    	} catch (MessagingException e) {
+    		logger.log(Level.SEVERE,"Error envio emial" , e);
+    	} 
+    	
+    	updateEmail(email);
     }
     
 }

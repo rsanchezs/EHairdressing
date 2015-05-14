@@ -101,7 +101,7 @@ public class LoginService {
 			context.addMessage(null, new FacesMessage("Logout failed."));
 			return null;
 		}
-		return "/dashboard?faces-redirect=true";
+		return "/empty-page?faces-redirect=true";
 	}
 
 }

@@ -230,28 +230,28 @@ public class Customer extends User implements Serializable {
 		
 	}
 	
-	/**	 
-	 * Method to return the day of the month that the customer was born
-	 * @return String representing the day of the month
-	 */
-	public @NotNull String getBirthDay() {
-
-		Calendar birthDay = new GregorianCalendar();
-		birthDay.setTime(dateOfBirth);
-		return Integer.toString( birthDay.get(Calendar.DAY_OF_MONTH));
-	}
-	
-	/**
-	 * Method to return the month that the customer was born
-	 *  * @return String representing the month
-	 */
-	public @NotNull String getBirthMonth() {
-		
-		Calendar birthMonth = new GregorianCalendar();
-		birthMonth.setTime(dateOfBirth);
-		return Integer.toString( birthMonth.get(Calendar.MONTH));
-	}
-	
+//	/**	 
+//	 * Method to return the day of the month that the customer was born
+//	 * @return String representing the day of the month
+//	 */
+//	public @NotNull String getBirthDay() {
+//
+//		Calendar birthDay = new GregorianCalendar();
+//		birthDay.setTime(dateOfBirth);
+//		return Integer.toString( birthDay.get(Calendar.DAY_OF_MONTH));
+//	}
+//	
+//	/**
+//	 * Method to return the month that the customer was born
+//	 *  * @return String representing the month
+//	 */
+//	public @NotNull String getBirthMonth() {
+//		
+//		Calendar birthMonth = new GregorianCalendar();
+//		birthMonth.setTime(dateOfBirth);
+//		return Integer.toString( birthMonth.get(Calendar.MONTH));
+//	}
+//	
 
 
 }

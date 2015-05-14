@@ -1,0 +1,141 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/template.xhtml">
+
+	<ui:define name="title">
+		Emails guardados
+	</ui:define>
+
+	<ui:define name="content">
+		<h:outputScript name="jquery/jquery.js" library="primefaces"
+			target="head" />
+
+		<div class="Container100">
+			<div class="ContainerIndent">
+				<p:panel>
+					<span class="FontBold Fs18 hardblue Container90">Email</span>
+					<div class="Container100">
+						<div class="ContainerIndent">
+							<h:form id="form_cs">
+								<p:growl id="messages" showDetail="true"/>
+								<p:dataTable id="emailDT" var="email"
+									value="#{emailView.emails}" selectionMode="single"
+									selection="#{emailView.selectedEmail}" rowKey="#{email.id}"
+									rows="10" paginator="true"
+									paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+									rowsPerPageTemplate="5,10,15"
+									emptyMessage="No se han encontrado emails"
+									reflow="true" editable="true">
+									<f:facet name="header">
+	              						  Lista de emails
+	        					    </f:facet>
+									<p:column headerText="Asunto"
+										sortBy="#{email.subject}">
+										<h:outputText value="#{email.subject}" />
+									</p:column>
+									<p:column headerText="Creado el"
+										sortBy="#{email.sendDate}">
+										<h:outputText value="#{email.creationDate}">
+											<f:convertDateTime type="date"/>
+										</h:outputText>
+									</p:column>
+									<p:column headerText="Nota administrativa"
+										sortBy="{#{email.administrativeNote}}">
+										<h:outputText value="#{email.administrativeNote}" />
+									</p:column>
+									
+									<f:facet name="footer">
+										<p:splitButton value="#{i18n.view}" process="emailDT"
+												update=":form_cs:emailDetail"
+												oncomplete="PF('emailDialog').show()">
+											
+											<p:menuitem value="#{i18n.update}" process="emailDT"
+											update=":form_cs:emailEditDetail"
+											oncomplete="PF('emailEditDialog').show()"
+											icon="ui-icon-arrowrefresh-1-w fa fa-repeat Fs14"/>
+											
+											<p:menuitem value="#{i18n.delete}" icon="ui-icon-close fa fa-close Fs14"
+											process="emailDT"
+											action="#{emailView.doDeleteEmail()}"/>
+	
+											<p:separator />
+											<p:menuitem value="#{i18n.new}"
+												outcome="/admin/email/create"
+												icon="ui-icon-contact fa fa-plus" />
+										</p:splitButton>
+
+									</f:facet>
+								</p:dataTable>
+								
+								<div class="EmptyBox20"></div>
+								<p:dialog header="Email info"
+									widgetVar="emailDialog" modal="true" showEffect="fade"
+									hideEffect="fade" resizable="false">
+									<p:outputPanel id="emailDetail" style="text-align:center;">
+										<p:panelGrid columns="2"
+											rendered="#{not empty emailView.selectedEmail}">
+
+											<h:outputText class="FontBold" value="Asunto" />
+											<h:outputText value="#{emailView.selectedEmail.subject}" />
+
+											<h:outputText class="FontBold" value="Creado el" />
+											<h:outputText value="#{emailView.selectedEmail.creationDate}">
+												<f:convertDateTime type="date"/>
+											</h:outputText>
+											
+											<h:outputText class="FontBold" value="Nota administrativa" />
+											<h:outputText value="#{emailView.selectedEmail.administrativeNote}" />
+
+											<h:outputText class="FontBold" value="Cuerpo del mensaje" />
+											<p:editor id="viewEditor" value="#{emailView.selectedEmail.body}" disabled="true"/>
+											
+										</p:panelGrid>
+									</p:outputPanel>
+								</p:dialog>
+							
+								<p:dialog header="Editar email"
+									widgetVar="emailEditDialog" showEffect="fade" 
+									hideEffect="fade" resizable="true" closable="true" showHeader="true"
+									minimizable="true" maximizable="true">
+									<p:outputPanel id="emailEditDetail" style="text-align:center;">
+										<p:panelGrid columns="2" 
+											rendered="#{not empty emailView.selectedEmail}">
+											
+											<h:outputText class="FontBold" value="Asunto" />
+											<p:inputText styleClass="Wid90 FontLight Fs16" value="#{emailView.selectedEmail.subject}" />
+
+											<h:outputText class="FontBold" value="Creado el" />
+											<p:inputText styleClass="Wid90 FontLight Fs16" value="#{emailView.selectedEmail.creationDate}">
+												<f:convertDateTime type="date"/>
+											</p:inputText>
+											
+											<h:outputText class="FontBold" value="Nota administrativa" />
+											<p:inputText styleClass="Wid90 FontLight Fs16" value="#{emailView.selectedEmail.administrativeNote}" />
+
+											<h:outputText class="FontBold" value="Etiquetas" />
+											<p:inputText styleClass="Wid90 FontLight Fs16" value="#{emailView.selectedEmail.tags}" />
+
+											<h:outputText class="FontBold" value="Cuerpo del mensaje" />
+											<p:editor id="editEditor" value="#{emailView.selectedEmail.body}"/>
+											
+											<f:facet name="footer">
+												<div class="EmptyBox10"/>
+												<p:commandButton value="#{i18n.cancel}" onclick="PF('emailEditDialog').hide();" /> 
+												<p:commandButton value="#{i18n.ok}" action="#{emailView.doUpdateEmail()}"
+												onclick="PF('emailEditDialog').hide();"/>
+											</f:facet>
+										</p:panelGrid>
+									</p:outputPanel>
+								</p:dialog>
+							</h:form>
+						</div>
+					</div>
+				</p:panel>
+			</div>
+		</div>
+	</ui:define>
+
+</ui:composition>

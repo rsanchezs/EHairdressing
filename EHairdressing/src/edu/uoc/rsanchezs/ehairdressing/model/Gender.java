@@ -9,6 +9,8 @@ package edu.uoc.rsanchezs.ehairdressing.model;
  */
 public enum Gender {
 	
-	MALE,FEMALE
+	Hombre,Mujer
+	
+	
 
 }

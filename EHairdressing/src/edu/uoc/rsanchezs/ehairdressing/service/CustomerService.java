@@ -19,6 +19,7 @@ import javax.inject.Named;
 import javax.interceptor.Interceptors;
 import javax.validation.constraints.NotNull;
 
+import edu.uoc.rsanchezs.ehairdressing.model.Address;
 import edu.uoc.rsanchezs.ehairdressing.model.Customer;
 import edu.uoc.rsanchezs.ehairdressing.util.Loggable;
 import edu.uoc.rsanchezs.ehairdressing.util.LoggingInterceptor;

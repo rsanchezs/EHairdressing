@@ -1,7 +1,6 @@
 package edu.uoc.rsanchezs.ehairdressing.view;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
@@ -11,9 +10,7 @@ import java.io.Serializable;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -65,10 +62,17 @@ public class CustomerView extends AbstractBean implements Serializable {
 	 * Creates a Customer
 	 * @return A outcome String that refresh the page
 	 */
-	public String doCreateCustomer() {
+	public void doCreateCustomer() {
+		int before = customerService.findAllCustomers().size();
 		customer.setAddress(address);
 		customerService.createCustomer(customer);
-		return "/admin/customers/view?faces-redirect=true";
+		int after =customerService.findAllCustomers().size();
+		if(after > before){
+			addInformationMessage("succes_create_customer");
+		}else {
+			addErrorMessage("error_create_customer");
+		}
+		
 	}
 	/**
 	 * Deletes a Customer

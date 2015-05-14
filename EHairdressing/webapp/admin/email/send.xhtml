@@ -1,0 +1,89 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/WEB-INF/templates/template.xhtml">
+
+	<ui:define name="title">
+		Envio email
+	</ui:define>
+
+	<ui:define name="content">
+		<h:outputScript name="jquery/jquery.js" library="primefaces"
+			target="head" />
+
+		<div class="Container100">
+			<div class="ContainerIndent">
+				<p:panel>
+					<span class="FontBold Fs18 hardblue Container90">Email</span>
+					<div class="Container100">
+						<div class="ContainerIndent">
+							<h:form id="form_cs">
+								<p:growl id="msgs" showDetail="true"/>
+								<p:dataTable id="emailDT" var="email"
+									value="#{emailView.emails}" selectionMode="single"
+									selection="#{emailView.selectedEmail}" rowKey="#{email.id}"
+									rows="10" paginator="true"
+									paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+									rowsPerPageTemplate="5,10,15"
+									emptyMessage="No se han encontrado emails"
+									reflow="true" editable="true">
+									<f:facet name="header">
+	              						  Lista de emails
+	        					    </f:facet>
+									<p:column headerText="Asunto"
+										sortBy="#{email.subject}">
+										<h:outputText value="#{email.subject}" />
+									</p:column>
+									<p:column headerText="Creado el"
+										sortBy="#{email.creationDate}">
+										<h:outputText value="#{email.creationDate}">
+											<f:convertDateTime type="date"/>
+										</h:outputText>
+									</p:column>
+										<p:column headerText="Enviado el"
+										sortBy="#{email.sendDate}">
+										<h:outputText value="#{email.sendDate}">
+											<f:convertDateTime type="date"/>
+										</h:outputText>
+									</p:column>
+									<p:column headerText="Nota administrativa"
+										sortBy="{#{email.administrativeNote}}">
+										<h:outputText value="#{email.administrativeNote}" />
+									</p:column>
+									
+									<f:facet name="footer">
+										<p:menuButton value="Acciones">
+											<p:menuitem value="Envío rápido" icon="fa fa-send" 
+											 onclick="PF('expressSendDialog').show();" />
+											<p:menuitem value="Todos los clientes" icon="fa fa-users" />					
+											<p:menuitem value="Mujeres" icon="fa fa-female" />
+											<p:menuitem value="Hombres" icon="fa fa-male" />					 
+											<p:separator />
+											<p:menuitem value="Cancelar" outcome="/admin/email/send"
+												icon="ui-icon-extlink fa fa-external-link Fs14" />
+										</p:menuButton>
+									</f:facet>
+								</p:dataTable>
+								
+								<div class="EmptyBox20"></div>
+								<p:dialog header="Envio rapido" widgetVar="expressSendDialog" showEffect="fade" hideEffect="fade" width="500" height="75"
+								rendered="#{not empty emailView.selectedEmail}">
+											<p:inputText  styleClass="Wid90 FontLight Fs16" placeholder="Introduce hasta 10 correos electrónicos, separados por coma (,)"
+											value="#{emailView.addresslist}"/>
+											<f:facet name="footer">
+												<p:commandButton value="Aceptar" update="msgs emailDT" action="#{emailView.doSendEmail()}"
+																	onclick="PF('expressSendDialog').hide();"/>
+												<p:commandButton value="Cancelar" onclick="PF('expressSendDialog').hide();" />	
+											</f:facet>
+								</p:dialog>
+							</h:form> 
+						</div>
+					</div>
+				</p:panel>
+			</div>
+		</div>
+	</ui:define>
+
+</ui:composition>

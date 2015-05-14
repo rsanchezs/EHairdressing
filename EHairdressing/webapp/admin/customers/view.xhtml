@@ -116,6 +116,10 @@
 											<h:outputText value="#{customerView.selectedCustomer.birthday}">
 												<f:convertDateTime type="date"/>
 											</h:outputText>
+											
+											<h:outputText class="FontBold" value="#{i18n.age}" />
+											<h:outputText value="#{customerView.selectedCustomer.age}" />
+											
 											<h:outputText class="FontBold" value="#{i18n.gender}" />
 											<h:outputText value="#{customerView.selectedCustomer.gender}" />
 
@@ -153,16 +157,16 @@
 											<p:inputText value="#{customerView.selectedCustomer.surname}" />
 
 											<h:outputText class="FontBold" value="#{i18n.street}" />
-											<p:inputText value="#{customerView.address.street}" />
+											<p:inputText value="#{customerView.selectedCustomer.address.street}" />
 
 											<h:outputText class="FontBold" value="#{i18n.city}" />
-											<p:inputText value="#{customerView.address.city}" />
+											<p:inputText value="#{customerView.selectedCustomer.address.city}" />
 
 											<h:outputText class="FontBold" value="#{i18n.province}" />
-											<p:inputText value="#{customerView.address.province}" />
+											<p:inputText value="#{customerView.selectedCustomer.address.province}" />
 
 											<h:outputText class="FontBold" value="#{i18n.zipcode}" />
-											<p:inputText value="#{customerView.address.zipcode}" />
+											<p:inputText value="#{customerView.selectedCustomer.address.zipcode}" />
 
 											<h:outputText class="FontBold" value="#{i18n.birthday}" />
 											<p:inputText value="#{customerView.selectedCustomer.dateOfBirth}">

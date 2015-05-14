@@ -19,6 +19,7 @@
 			<div class="ContainerIndent">
 			<h:form id="form">
 				<p:panel header="Alta de nuevo cliente">
+				<p:growl id="msgs"/>
 				<div class="EmptyBox10"/>
 					<h:outputText value="Credenciales" styleClass="FontBold Fs18 hardblue"/>
 					<div class="EmptyBox10"/> 
@@ -33,13 +34,17 @@
 	                    <p:inputText styleClass="Wid90 FontLight Fs16" placeholder="Nombre" value="#{customerView.customer.name}"/>
 	                    <p:inputText styleClass="Wid90 FontLight Fs16" placeholder="Apellidos" value="#{customerView.customer.surname}"/>
 	                    <p:inputText styleClass="Wid90 FontLight Fs16" placeholder="Teléfono móvil" value="#{customerView.customer.mobilePhone}"/>
-	                    <p:calendar styleClass="FontLight Fs16" id="age" showOn="button" placeholder="Fecha Nacimiento"  value="#{customerView.customer.dateOfBirth}">
+	                    <p:calendar styleClass="FontLight Fs16" id="dateOfBirth" showOn="button" placeholder="Fecha Nacimiento" 
+	                    			navigator="true" value="#{customerView.customer.dateOfBirth}">
 	                    	<f:convertDateTime type="time" pattern="dd/MM/yy"/>
 	                    </p:calendar>
 	                    <p:selectOneMenu id="gender" value="#{customerView.customer.gender}"  styleClass="FontLight Fs16" style="min-width:200px; width:315px;">
-	                        <f:selectItem styleClass="Wid90 FontLight Fs16" itemLabel="Seleccionar sexo" itemValue="" />
-	                        <f:selectItem styleClass="Wid90 FontLight Fs16" itemLabel="Hombre" itemValue="Hombre" />
-	                        <f:selectItem styleClass="Wid90 FontLight Fs16" itemLabel="Mujer" itemValue="Mujer" />
+	                        <f:selectItems styleClass="Wid90 FontLight Fs16"
+	                        				value="#{enumValuesProvider.genders}" 
+	                        				var="gender"
+	                        				itemValue="#{gender}"
+	                        				itemLabel="#{gender}"/>
+	                       
 	                    </p:selectOneMenu>   
 	                </p:panelGrid>
 					<div class="EmptyBox10"/>	
@@ -64,9 +69,9 @@
 						</p:panelGrid>
 					<f:facet name="footer">
 					  <p:menuButton value="Opciones">
-                            <p:menuitem value="Guardar" action="#{customerView.doCreateCustomer()}" ajax="false" icon="ui-icon-disk fa fa-save Fs14"/>
+                            <p:menuitem value="Guardar" action="#{customerView.doCreateCustomer()}" update="msgs" ajax="false" icon="ui-icon-disk fa fa-save Fs14"/>
                             <p:separator />
-                            <p:menuitem value="Cancelar" outcome="/admin/customers/view" icon="ui-icon-extlink fa fa-external-link Fs14"/>
+                            <p:menuitem value="Volver" outcome="/admin/customers/view" icon="ui-icon-extlink fa fa-external-link Fs14"/>
                       </p:menuButton>
                      </f:facet>
 				</p:panel>

@@ -20,7 +20,7 @@ import static javax.persistence.TemporalType.DATE;
  *
  */
 @Entity
-@NamedNativeQuery(name = "Email.findAll", query = "SELECT e FROM Email e")
+@NamedQuery(name = "Email.findAll", query = "SELECT e FROM Email e")
 public class Email implements Serializable {
 
 	public static final String FIND_ALL = "Email.findAll";
