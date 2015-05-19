@@ -4,6 +4,7 @@ import edu.uoc.rsanchezs.ehairdressing.model.Customer;
 import edu.uoc.rsanchezs.ehairdressing.model.Event;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.*;
@@ -13,7 +14,18 @@ import javax.persistence.*;
  *
  */
 @Entity
+@NamedQueries({
+	
+	@NamedQuery(name = "Appointment.findAll", query = "SELECT a FROM Appointment a "),
+		
+	@NamedQuery(name = "Appointment.findAppointmentByTitle", query = "SELECT a FROM Appointment  a WHERE a.title = :title") 
+})
 public class Appointment extends Event implements Serializable {
+	
+	
+
+	public static final String FIND_ALL = "Appointment.findAll";
+	public static final String FIND_BY_TITLE = "Appointment.findAppointmentByTitle";
 
 	private static final long serialVersionUID = 1L;
 	
@@ -23,7 +35,12 @@ public class Appointment extends Event implements Serializable {
 
 	public Appointment() {
 		super();
-	}   
+	} 
+
+	public Appointment(String title, Date startDate, Date endDate) {
+		super(title,startDate,endDate);
+	}
+	
 	public Customer getCustomer() {
 		return this.customer;
 	}

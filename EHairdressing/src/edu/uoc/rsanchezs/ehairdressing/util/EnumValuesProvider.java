@@ -2,8 +2,6 @@ package edu.uoc.rsanchezs.ehairdressing.util;
 
 import java.io.Serializable;
 
-import javax.ejb.LocalBean;
-import javax.ejb.Stateless;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 
@@ -16,7 +14,10 @@ import edu.uoc.rsanchezs.ehairdressing.model.Gender;
 @RequestScoped
 public class EnumValuesProvider implements Serializable{
 
-    /**
+   
+	private static final long serialVersionUID = -3151962490920803221L;
+
+	/**
      * Default constructor. 
      */
     public EnumValuesProvider() {

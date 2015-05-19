@@ -11,6 +11,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
+
+import edu.uoc.rsanchezs.ehairdressing.constraints.Email;
+import edu.uoc.rsanchezs.ehairdressing.constraints.Login;
+import edu.uoc.rsanchezs.ehairdressing.constraints.NotEmpty;
+import edu.uoc.rsanchezs.ehairdressing.util.PersistGroup;
 import static javax.persistence.GenerationType.SEQUENCE;
 import static javax.persistence.InheritanceType.SINGLE_TABLE;
 import static javax.persistence.InheritanceType.JOINED;
@@ -45,14 +50,19 @@ public class User implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
-	}   
+	}
+	@Login(groups=PersistGroup.class)
+	@NotEmpty(groups=PersistGroup.class)
 	public String getPassword() {
 		return this.password;
 	}
 
 	public void setPassword(String password) {
 		this.password = password;
-	}   
+	}
+	
+	@NotEmpty(groups=PersistGroup.class)
+	@Email(groups=PersistGroup.class)
 	public String getUsername() {
 		return this.username;
 	}

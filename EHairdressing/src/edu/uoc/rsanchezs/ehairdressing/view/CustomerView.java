@@ -79,7 +79,14 @@ public class CustomerView extends AbstractBean implements Serializable {
 	 * @return A outcome String that refresh the page
 	 */
 	public String doDeleteCustomer() {
+		int before = customerService.findAllCustomers().size();
 		customerService.remove(selectedCustomer);
+		int after = customerService.findAllCustomers().size();
+		if(after < before) {
+			addInformationMessage("succes_delete_customer");
+		}else{
+			addErrorMessage("error_delete_customer");
+		}
 		return "/admin/customers/view?faces-redirect=true";
 	}
 	
@@ -89,6 +96,7 @@ public class CustomerView extends AbstractBean implements Serializable {
 	 */
 	public String doUpdateCustomer() {
 		customerService.merge(selectedCustomer);
+		addInformationMessage("succes_update_customer");
 		return "/admin/customers/view?faces-redirect=true";
 	}
 

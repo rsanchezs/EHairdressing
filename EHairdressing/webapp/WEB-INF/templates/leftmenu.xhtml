@@ -36,11 +36,11 @@
                    <p:menuitem id="sm_state_sms" value="#{i18n.state}" icon="icon-history" outcome="empty-page.xhtml" />
             </p:submenu>
             <p:submenu id="sm_maintence" label="#{i18n.maintance}" icon="icon-wrench-1" rendered="#{request.isUserInRole('admin')}" >
-                <p:menuitem id="sm_customers" value="#{i18n.customers}" icon="icon-user" outcome="empty-page"/>
+                <p:menuitem id="sm_customers" value="#{i18n.customers}" icon="icon-user" outcome="/admin/customers/view"/>
                 <p:menuitem id="sm_services" value="#{i18n.services}" icon="icon-ruler" outcome="empty-page"/>   
             </p:submenu>
             
-            <p:menuitem id="cs_schedule_appointment" value="#{i18n.schedule_appointment}" icon="icon-calendar-2" 
+            <p:menuitem id="cs_schedule_appointment" value="#{i18n.create_new_appointment}" icon="icon-calendar-2" 
             				rendered="#{!request.isUserInRole('admin')}" outcome="/myaccount/appointment"/>
             <p:menuitem id="sm_user_profile" value="#{i18n.user_profile}" icon="icon-vcard"  outcome="empty-page"
             			    rendered="#{!request.isUserInRole('admin')}" />

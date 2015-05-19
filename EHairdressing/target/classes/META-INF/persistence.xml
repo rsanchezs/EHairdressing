@@ -8,7 +8,9 @@
 		<jta-data-source>jdbc/ehairdressing</jta-data-source>
 		<properties>
 			<property name="eclipselink.logging.level" value="FINE" />
-			<property name="javax.persistence.sql-load-script-source" value="init_db.sql"/>
+			<property name="javax.persistence.schema-generation.database.action" value="none"/>
+			<property name="eclipselink.ddl-generation.output-mode" value="both"/>
+			<property name="eclipselink.ddl-generation" value="none"/>
 		</properties>
 		
 	</persistence-unit>

@@ -4,7 +4,6 @@ package edu.uoc.rsanchezs.ehairdressing.service;
 import static edu.uoc.rsanchezs.ehairdressing.model.Email.FIND_ALL;
 
 import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;

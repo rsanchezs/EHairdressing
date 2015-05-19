@@ -9,20 +9,14 @@ import java.util.List;
 
 import javax.annotation.Resource;
 import javax.ejb.LocalBean;
-import javax.ejb.ScheduleExpression;
 import javax.ejb.Stateless;
 import javax.ejb.Timeout;
 import javax.ejb.Timer;
-import javax.ejb.TimerConfig;
 import javax.ejb.TimerService;
 import javax.inject.Named;
-import javax.interceptor.Interceptors;
 import javax.validation.constraints.NotNull;
 
-import edu.uoc.rsanchezs.ehairdressing.model.Address;
 import edu.uoc.rsanchezs.ehairdressing.model.Customer;
-import edu.uoc.rsanchezs.ehairdressing.util.Loggable;
-import edu.uoc.rsanchezs.ehairdressing.util.LoggingInterceptor;
 
 /**
  * Session Bean implementation class CustomerService
@@ -94,7 +88,8 @@ public class CustomerService extends AbstractService<Customer> implements Serial
      */
     public void removeCustomer(@NotNull Customer customer)
     {
-       em.remove(em.merge(customer));
+		em.remove(em.merge(customer));
+
     }
     
     /**

@@ -86,14 +86,6 @@ public abstract class AbstractService<T> {
 		return query.getResultList();
 	}
 
-	/**
-	 * Returns the number of records that meet the criteria
-	 * @param namedQueryName
-	 * @return List
-	 */
-	// public List findWithNamedQuery(String namedQueryName) {
-	// return this.em.createNamedQuery(namedQueryName).getResultList();
-	// }
 
 	/**
 	 * Returns the number of total records

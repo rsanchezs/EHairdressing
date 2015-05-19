@@ -36,7 +36,8 @@
     		<li class="Fleft BordRadHalf TexAlCenter"><i class="icon-power"></i>
     			<ul class="layout-header-widgets-submenu BordRad5 shadows white Animated05">
     				<li class="Animated05"><a href="javascript:history.go(0)" class="white Unselectable"><i class="icon-ccw-1"></i>#{i18n.restart}</a></li>
-    				<li class="Animated05"><a href="#" jsf:action="#{loginService.logout()}" class="white Unselectable"><i class="icon-logout"></i>#{i18n.log_out}</a></li>
+    				<li class="Animated05" jsf:rendered="#{not empty request.getUserPrincipal()}"><a href="#" jsf:action="#{loginService.logout()}" class="white Unselectable"><i class="icon-logout"></i>#{i18n.log_out}</a></li>
+    				<li class="Animated05" jsf:rendered="#{empty request.getUserPrincipal()}"><a href="#{request.contextPath}/login.xhtml" class="white Unselectable"><i class="icon-login"></i>#{i18n.login}</a></li>
     			</ul>
     		</li>
     	</ul>

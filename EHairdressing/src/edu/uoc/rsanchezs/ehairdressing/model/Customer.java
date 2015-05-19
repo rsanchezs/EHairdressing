@@ -1,9 +1,12 @@
 package edu.uoc.rsanchezs.ehairdressing.model;
 
 import java.io.Serializable;
-import java.util.Calendar;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
@@ -18,6 +21,10 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
+
+import edu.uoc.rsanchezs.ehairdressing.constraints.NotEmpty;
+import edu.uoc.rsanchezs.ehairdressing.util.PersistGroup;
 
 /**
  * Entity implementation class for Entity: Customer
@@ -52,10 +59,10 @@ public class Customer extends User implements Serializable {
 		super();
 	}
 
-
 	/**
 	 * @return the name
 	 */
+	@NotEmpty(groups=PersistGroup.class)
 	public String getName() {
 		return name;
 	}
@@ -63,6 +70,7 @@ public class Customer extends User implements Serializable {
 	/**
 	 * @return the surname
 	 */
+	@NotEmpty(groups=PersistGroup.class)
 	public String getSurname() {
 		return surname;
 	}
@@ -79,6 +87,8 @@ public class Customer extends User implements Serializable {
 	 * @return the dateOfBirth
 	 */
 	@Temporal(TemporalType.DATE)
+	@Past(groups=PersistGroup.class)
+	@NotEmpty(groups=PersistGroup.class)
 	public Date getDateOfBirth() {
 		return dateOfBirth;
 	}
@@ -103,6 +113,7 @@ public class Customer extends User implements Serializable {
 	 * @return the gender
 	 */
 	@Enumerated(EnumType.STRING)
+	@NotEmpty(groups=PersistGroup.class)
 	public Gender getGender() {
 		return gender;
 	}
@@ -110,6 +121,7 @@ public class Customer extends User implements Serializable {
 	/**
 	 * @return the mobilePhone
 	 */
+	@NotEmpty(groups=PersistGroup.class)
 	public String getMobilePhone() {
 		return mobilePhone;
 	}
@@ -203,7 +215,6 @@ public class Customer extends User implements Serializable {
 		this.profile = profile;
 	}
 
-
 	/**
 	 * Method that calculate the age of a Customer
 	 */
@@ -211,23 +222,14 @@ public class Customer extends User implements Serializable {
 	@PostPersist
 	@PostUpdate
 	public void calculateAge() {
-		if (dateOfBirth == null) {
-			dateOfBirth = null;
-			return;
-		}
+//
+//		if (dateOfBirth != null) {
+//			Instant instant = Instant.ofEpochMilli(this.dateOfBirth.getTime());
+//			LocalDate birthday = LocalDateTime.ofInstant(instant,
+//					ZoneId.systemDefault()).toLocalDate();
+//			this.age = (int) birthday.until(LocalDate.now(), ChronoUnit.YEARS);
+//		}
 
-		Calendar birth = new GregorianCalendar();
-		birth.setTime(new Date());
-		Calendar now = new GregorianCalendar();
-		now.setTime(new Date());
-		int adjust = 0;
-
-		if (now.get(Calendar.DAY_OF_YEAR) - birth.get(Calendar.DAY_OF_YEAR) < 0) {
-			adjust = -1;
-		}
-
-		age = now.get(Calendar.YEAR) - birth.getMaximum(Calendar.YEAR) + adjust;
-		
 	}
 	
 //	/**	 

@@ -69,6 +69,7 @@ public class EmailView extends AbstractBean implements Serializable {
 			tagService.createTag(newTag);
 		}
 		emailService.createEmail(email);
+		addInformationMessage("succes_create_email");
 		return "/admin/email/create?faces-redirect=true";
 	}
 	

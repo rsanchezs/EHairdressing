@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import edu.uoc.rsanchezs.ehairdressing.constraints.NotEmpty;
 import static javax.persistence.GenerationType.SEQUENCE;
 import static javax.persistence.TemporalType.TIME;
 import static javax.persistence.TemporalType.TIMESTAMP;
@@ -48,7 +49,8 @@ public class Email implements Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
-	}   
+	}
+	@NotEmpty(message="El asunto del mensaje es obligatorio")
 	public String getSubject() {
 		return this.subject;
 	}
@@ -72,7 +74,8 @@ public class Email implements Serializable {
 
 	public void setTags(List<String> tags) {
 		this.tags = tags;
-	}   
+	}
+	@NotEmpty(message="El cuerpo del mensaje es obligatorio")
 	public String getBody() {
 		return this.body;
 	}
