@@ -17,8 +17,4 @@
 			<supported-locale>ca</supported-locale>
 		</locale-config>
 	</application>
-	<converter>
-		<converter-for-class>java.lang.Enum</converter-for-class>
-		<converter-class>javax.faces.convert.EnumConverter</converter-class>
-	</converter>
 </faces-config>

@@ -1,5 +1,6 @@
 package edu.uoc.rsanchezs.ehairdressing.util;
 
+import java.io.Serializable;
 import java.util.logging.Logger;
 
 import javax.inject.Inject;
@@ -9,10 +10,12 @@ import javax.interceptor.InvocationContext;
 
 @Loggable
 @Interceptor
-public class LoggingInterceptor {
+public class LoggingInterceptor implements Serializable {
+	
+	private static final long serialVersionUID = 1120893000908130711L;
 	
 	@Inject
-	private Logger logger;
+	private transient Logger logger;
 	
 	@AroundInvoke
 	public Object logMethod(InvocationContext ic) throws Exception {

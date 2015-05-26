@@ -10,12 +10,14 @@ import javax.ejb.Stateless;
 import javax.validation.constraints.NotNull;
 
 import edu.uoc.rsanchezs.ehairdressing.model.Tag;
+import edu.uoc.rsanchezs.ehairdressing.util.Loggable;
 
 /**
  * Session Bean implementation class TagService
  */
 @Stateless
 @LocalBean
+@Loggable
 public class TagService extends AbstractService<Tag> implements Serializable {
 
 	private static final long serialVersionUID = 3330285238174992575L;

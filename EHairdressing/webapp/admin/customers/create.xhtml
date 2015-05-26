@@ -52,6 +52,7 @@
 	                   
 	                    <p:selectOneMenu id="gender" value="#{customerView.customer.gender}" 
 	                    		styleClass="FontLight Fs16" style="min-width:200px; width:315px;" required="true" requiredMessage="El campo es obligatorio">
+	                    	<f:selectItem itemValue="" itemLabel="Seleccionar sexo"/>
 	                        <f:selectItems styleClass="Wid90 FontLight Fs16"
 	                        				value="#{enumValuesProvider.genders}" 
 	                        				var="gender"
@@ -62,7 +63,7 @@
 					<div class="EmptyBox10"/>	
 					<h:outputText value="Dirección" styleClass="FontBold Fs18 hardblue"/>
 					<div class="EmptyBox10"/>
-					<p:panelGrid columns="2" layout="grid" style="border:0px none;background:none">
+					<p:panelGrid id="detail" columns="2" layout="grid" style="border:0px none;background:none">
 	                    <p:inputText styleClass="Wid90 FontLight Fs16" placeholder="Calle" value="#{customerView.address.street}"/>
 	                    <p:inputText styleClass="Wid90 FontLight Fs16" placeholder="Ciudad" value="#{customerView.address.city}"/>
 	                    <p:inputText styleClass="Wid90 FontLight Fs16" placeholder="Provincia" value="#{customerView.address.province}"/>  
@@ -82,6 +83,7 @@
 					<f:facet name="footer">
 					  <p:menuButton value="Opciones">
                             <p:menuitem value="Guardar" action="#{customerView.doCreateCustomer()}" update="msgs" ajax="false" icon="ui-icon-disk fa fa-save Fs14"/>
+                            <p:menuitem type="reset" value="Reset" icon="ui-icon-refresh fa fa-refresh Fs14" update="detail"/>
                             <p:separator />
                             <p:menuitem value="Volver" outcome="/admin/customers/view" icon="ui-icon-extlink fa fa-external-link Fs14"/>
                       </p:menuButton>

@@ -173,7 +173,7 @@ public class CustomerView extends AbstractBean implements Serializable {
 				customer.setUsername(record[2]);
 				customer.setMobilePhone(record[3]);
 				customer.setBirthday(record[4]);
-				customerService.createCustomer(customer);
+				customerService.saveCustomer(customer);
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

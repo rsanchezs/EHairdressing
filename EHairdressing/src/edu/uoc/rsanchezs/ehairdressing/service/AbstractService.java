@@ -2,12 +2,10 @@ package edu.uoc.rsanchezs.ehairdressing.service;
 
 import java.util.List;
 
-import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
-import javax.servlet.http.HttpServletRequest;
 
 import edu.uoc.rsanchezs.ehairdressing.util.EHairdressingPU;
 
@@ -59,6 +57,18 @@ public abstract class AbstractService<T> {
 	public T findById(Long id) {
 		return em.find(entityClass, id);
 	}
+	
+
+	/**
+	 * Retrieves an entity instance that was previously persisted to the
+	 * database
+	 * @param T  Objet
+	 * @param id
+	 * @return
+	 */
+	public T findById(String id) {
+		return em.find(entityClass, id);
+	}
 
 	/**
 	 * Removes the record that is associated with the entity instance
@@ -86,7 +96,15 @@ public abstract class AbstractService<T> {
 		return query.getResultList();
 	}
 
-
+	/**
+	 * Returns the number of records that meet the criteria
+	 * @param namedQueryName
+	 * @return List
+	 */
+	public List<T> findWithNativeQuery(String nativeQueryName) {
+		TypedQuery<T> query = em.createNamedQuery(nativeQueryName, entityClass);
+		return query.getResultList();
+	}
 	/**
 	 * Returns the number of total records
 	 * @param namedQueryName
@@ -98,14 +116,5 @@ public abstract class AbstractService<T> {
 		return result.intValue();
 	}
 	
-	public FacesContext getContextWrapper(){
-		FacesContext context = FacesContext.getCurrentInstance();
-		return context;
-	}
-	
-	public HttpServletRequest getRequestWrapper() {
-		HttpServletRequest request = (HttpServletRequest) getContextWrapper().
-				getExternalContext().getRequest();
-		return request;
-	}
+
 }

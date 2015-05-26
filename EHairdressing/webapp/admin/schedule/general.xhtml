@@ -16,9 +16,9 @@
 		
 		<h:form>
 		<div class="Container70">
-		    <p:growl id="messages" showDetail="true" />
+		    <p:growl id="messages"/>
 			<p:panel header="Agenda general">
-				<p:schedule id="schedule" value="#{generalScheduleView.lazyEventModel}" locale="es" timeZone="GMT+2" widgetVar="myschedule" resizable="true">
+				<p:schedule id="schedule" value="#{generalScheduleView.lazyEventModel}" locale="es" timeZone="GMT+2" widgetVar="myschedule">
 					<p:ajax event="dateSelect" listener="#{generalScheduleView.onDateSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
 		            <p:ajax event="eventSelect" listener="#{generalScheduleView.onEventSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
 				</p:schedule>
@@ -26,10 +26,9 @@
 					<p:dialog id="dialog" widgetVar="eventDialog" header="Detalles cita"
 						showEffect="clip" hideEffect="clip">
 						<h:panelGrid id="eventDetails" columns="2">
-
-							
+						
 							<h:outputLabel for="title" value="Título:" />
-				            <p:inputText id="title" value="#{generalScheduleView.event.title}" required="true" />
+				            <p:inputText id="title" value="#{generalScheduleView.event.title}" required="true" requiredMessage="Por favor, inserte un título para la cita"/>
 				 
 				            
 				            <p:outputLabel for="from" value="De:" />
@@ -46,12 +45,15 @@
 				            <h:selectBooleanCheckbox id="allDay" value="#{generalScheduleView.event.allDay}" />
  							
  							
-							<p:commandButton type="reset" value="Reset" />
-							<p:commandButton id="addButton" value="Guardar"
-								actionListener="#{generalScheduleView.addEvent}" 
+							<p:commandButton type="reset" value="Reset" rendered="#{empty generalScheduleView.event.id}"/>
+							<p:commandButton id="addButton" value="Guardar" update="messages"
+								actionListener="#{generalScheduleView.doCreateEvent}" 
 								oncomplete="PF('myschedule').update();PF('eventDialog').hide();" rendered="#{empty generalScheduleView.event.id}"/>
-							<p:commandButton id="updateButton" value="Actualizar"
-								actionListener="#{generalScheduleView.addEvent}" 
+							<p:commandButton id="updateButton" value="Actualizar" update="messages"
+								actionListener="#{generalScheduleView.doCreateEvent}" 
+								oncomplete="PF('myschedule').update();PF('eventDialog').hide();" rendered="#{not empty generalScheduleView.event.id}"/>
+							<p:commandButton id="deleteButton" value="Borrar" update="messages"
+								actionListener="#{generalScheduleView.doDeleteEvent}" 
 								oncomplete="PF('myschedule').update();PF('eventDialog').hide();" rendered="#{not empty generalScheduleView.event.id}"/>
 						</h:panelGrid>
 					</p:dialog>

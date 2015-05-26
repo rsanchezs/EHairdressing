@@ -6,14 +6,74 @@
                 template="/WEB-INF/templates/template.xhtml">
                 
     <ui:define name="title">
-		<title></title>
+		Agenda Citas
 	</ui:define>
 	
     <ui:define name="content">
         <h:outputScript name="jquery/jquery.js" library="primefaces" target="head"/>
-        
-        <h3 class="hardblue TexAlCenter">Empty Page</h3>
-        <span class="TexAlCenter DispBlock Wid100">Use this page to start from scratch and place your custom content.</span>
+		<h:outputScript name="js/es.js" library="primefaces-sentinel" />
+		<h:outputScript name="js/en.js" library="primefaces-sentinel" />
+		
+		<h:form>
+		<div class="Container70">
+		    <p:growl id="messages" showDetail="true" />
+			<p:panel header="Agenda citas">
+				<p:schedule id="schedule" value="#{appointmentScheduleView.lazyEventModel}" locale="es" timeZone="GMT+2" widgetVar="myschedule">
+					<p:ajax event="dateSelect" listener="#{appointmentScheduleView.onDateSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
+		            <p:ajax event="eventSelect" listener="#{appointmentScheduleView.onEventSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
+				</p:schedule>
+
+					<p:dialog id="dialog" widgetVar="eventDialog" header="Detalles cita"
+						showEffect="clip" hideEffect="clip" modal="true">
+						<h:panelGrid id="eventDetails" columns="2">
+						
+						<h:outputLabel for="title" value="Título:" />
+				        <p:inputText id="title" value="#{appointmentScheduleView.event.title}" required="true" />
+							<h:outputLabel value="Cliente:" />
+				          	<p:selectOneMenu id ="customer" value="#{appointmentScheduleView.selectedCustomer}" rendered="#{empty appointmentScheduleView.event.id}"
+						         converter="customer" height="250" effect="fade" var="c">
+						         <f:selectItem itemLabel="Seleccionar" itemValue="" />
+						         <f:selectItems value="#{appointmentScheduleView.availableCustomers}" var="customer" itemLabel="#{customer}" itemValue="#{customer}"/>
+						         <p:column>
+						           #{c.name}  #{c.surname}
+						         </p:column>
+							</p:selectOneMenu>
+				            <p:inputText id="title" value="#{appointmentScheduleView.event.title}" required="true" rendered="#{not empty appointmentScheduleView.event.id}" />
+				            <p:outputLabel for="pickList" value="Servicios:" rendered="#{empty appointmentScheduleView.event.id}"/>
+			                <p:pickList id="pickList" value="#{appointmentScheduleView.services}" var="services" 
+			                	itemLabel="#{services}" itemValue="#{services}" rendered="#{empty appointmentScheduleView.event.id}"
+                                showSourceControls="true" showTargetControls="true" showSourceFilter="true" showTargetFilter="true">
+		                        <f:facet name="sourceCaption">Source</f:facet>
+		                        <f:facet name="targetCaption">Target</f:facet>
+                   			</p:pickList>
+				            <p:outputLabel for="from" value="De:" />
+					        <p:calendar id="from" value="#{appointmentScheduleView.event.startDate}" timeZone="GMT+2" pattern="dd/MM/yyyy HH:mm:ss">
+					        	 <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" timeZone="GMT+2"/>
+					        </p:calendar>
+				 			
+				 			<p:outputLabel for="to" value="A:" />
+					        <p:calendar id="to" value="#{appointmentScheduleView.event.endDate}" timeZone="GMT+2" pattern="dd/MM/yyyy HH:mm:ss">
+					        	 <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" timeZone="GMT+2"/>
+					        </p:calendar>
+				            <h:outputLabel for="allDay" value="Todo el día:" />
+				            <h:selectBooleanCheckbox id="allDay" value="#{appointmentScheduleView.event.allDay}" />
+				         
+							<p:commandButton type="reset" value="Reset" rendered="#{empty appointmentScheduleView.event.id}" />
+							<p:commandButton id="addButton" value="Guardar"
+								actionListener="#{appointmentScheduleView.doCreateAppointment}" 
+								oncomplete="PF('myschedule').update();PF('eventDialog').hide();" rendered="#{empty appointmentScheduleView.event.id}"/>
+							<p:commandButton id="updateButton" value="Actualizar"
+								actionListener="#{appointmentScheduleView.doCreateAppointment}" 
+								oncomplete="PF('myschedule').update();PF('eventDialog').hide();" rendered="#{not empty appointmentScheduleView.event.id}"/>
+							<p:commandButton id="deleteButton" value="Borrar"
+								actionListener="#{appointmentScheduleView.doDeleteAppointment}" 
+								oncomplete="PF('myschedule').update();PF('eventDialog').hide();" rendered="#{not empty appointmentScheduleView.event.id}"/>
+					
+						</h:panelGrid>
+					</p:dialog>
+				</p:panel> 
+	   </div>
+	   </h:form>  
     </ui:define>
 
 </ui:composition>

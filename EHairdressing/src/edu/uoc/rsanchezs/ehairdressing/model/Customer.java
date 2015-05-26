@@ -1,30 +1,40 @@
 package edu.uoc.rsanchezs.ehairdressing.model;
 
+import static javax.persistence.CascadeType.ALL;
+
 import java.io.Serializable;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.PostLoad;
 import javax.persistence.PostPersist;
 import javax.persistence.PostUpdate;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 
 import edu.uoc.rsanchezs.ehairdressing.constraints.NotEmpty;
 import edu.uoc.rsanchezs.ehairdressing.util.PersistGroup;
+import static javax.persistence.CascadeType.PERSIST;
+import static javax.persistence.CascadeType.REMOVE;
 
 /**
  * Entity implementation class for Entity: Customer
@@ -53,11 +63,76 @@ public class Customer extends User implements Serializable {
 	private Profile profile;
 	private Date creationDate = new Date();
 	private Address address = new Address();
+	private List<Appointment> appointments = new ArrayList<Appointment>();
 	
 
 	public Customer() {
 		super();
 	}
+	
+
+	/**
+	 * @param name
+	 * @param surname
+	 * @param mobilePhone
+	 * @param dateOfBirth
+	 * @param birthday
+	 * @param age
+	 * @param gender
+	 * @param profile
+	 * @param creationDate
+	 * @param address
+	 */
+	public Customer(String name, String surname, String mobilePhone,
+			Date dateOfBirth, String birthday, Integer age, Gender gender,
+			Profile profile, Date creationDate, Address address) {
+		super();
+		this.name = name;
+		this.surname = surname;
+		this.mobilePhone = mobilePhone;
+		this.dateOfBirth = dateOfBirth;
+		this.birthday = birthday;
+		this.age = age;
+		this.gender = gender;
+		this.profile = profile;
+		this.creationDate = creationDate;
+		this.address = address;
+	}
+	
+	
+
+	/**
+	 * @param name
+	 * @param surname
+	 * @param mobilePhone
+	 * @param dateOfBirth
+	 * @param birthday
+	 * @param age
+	 * @param gender
+	 * @param profile
+	 * @param creationDate
+	 * @param address
+	 * @param appointments
+	 */
+	public Customer(String name, String surname, String mobilePhone,
+			Date dateOfBirth, String birthday, Integer age, Gender gender,
+			Profile profile, Date creationDate, Address address,
+			List<Appointment> appointments) {
+		super();
+		this.name = name;
+		this.surname = surname;
+		this.mobilePhone = mobilePhone;
+		this.dateOfBirth = dateOfBirth;
+		this.birthday = birthday;
+		this.age = age;
+		this.gender = gender;
+		this.profile = profile;
+		this.creationDate = creationDate;
+		this.address = address;
+		this.appointments = appointments;
+	}
+
+
 
 	/**
 	 * @return the name
@@ -214,6 +289,40 @@ public class Customer extends User implements Serializable {
 	public void setProfile(Profile profile) {
 		this.profile = profile;
 	}
+	
+	/**
+	 * @return the appointments
+	 */
+	@OneToMany(mappedBy = "customer")
+	public List<Appointment> getAppointments() {
+		return appointments;
+	}
+
+	/**
+	 * @param appointments the appointments to set
+	 */
+	public void setAppointments(List<Appointment> appointments) {
+		this.appointments = appointments;
+	}
+
+	/**
+	 * Method to add an Appointment in the list of
+	 * appointments of this Customer
+	 */
+	public void add(Appointment appointment) {
+		appointments.add(appointment);
+		
+	}
+	
+	/**
+	 * Method to remove an Appointment in the list of
+	 * appointments of this Customer
+	 * @param appointment
+	 */
+	public void remove(Appointment appointment){
+		appointments.remove(appointment);
+		
+	}
 
 	/**
 	 * Method that calculate the age of a Customer
@@ -221,39 +330,60 @@ public class Customer extends User implements Serializable {
 	@PostLoad
 	@PostPersist
 	@PostUpdate
-	public void calculateAge() {
-//
-//		if (dateOfBirth != null) {
-//			Instant instant = Instant.ofEpochMilli(this.dateOfBirth.getTime());
-//			LocalDate birthday = LocalDateTime.ofInstant(instant,
-//					ZoneId.systemDefault()).toLocalDate();
-//			this.age = (int) birthday.until(LocalDate.now(), ChronoUnit.YEARS);
-//		}
+	public Integer calculateAge() {
 
+		if (dateOfBirth == null) {
+			return null;
+		}else {
+			Instant instant = Instant.ofEpochMilli(this.dateOfBirth.getTime());
+			LocalDate birthday = LocalDateTime.ofInstant(instant,
+					ZoneId.systemDefault()).toLocalDate();
+			return this.age = (int) birthday.until(LocalDate.now(), ChronoUnit.YEARS);
+		}
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append(surname).append(" ").append(name);
+		return builder.toString();
 	}
 	
-//	/**	 
-//	 * Method to return the day of the month that the customer was born
-//	 * @return String representing the day of the month
-//	 */
-//	public @NotNull String getBirthDay() {
-//
-//		Calendar birthDay = new GregorianCalendar();
-//		birthDay.setTime(dateOfBirth);
-//		return Integer.toString( birthDay.get(Calendar.DAY_OF_MONTH));
-//	}
-//	
-//	/**
-//	 * Method to return the month that the customer was born
-//	 *  * @return String representing the month
-//	 */
-//	public @NotNull String getBirthMonth() {
-//		
-//		Calendar birthMonth = new GregorianCalendar();
-//		birthMonth.setTime(dateOfBirth);
-//		return Integer.toString( birthMonth.get(Calendar.MONTH));
-//	}
-//	
+	/**	 
+	 * Method to return the day of the month that the customer was born
+	 * @return String representing the day of the month
+	 */
+	public String getBirthDay() {
 
-
+		if (dateOfBirth == null) {
+			return null;
+		} else {
+			Calendar birthDay = new GregorianCalendar();
+			birthDay.setTime(dateOfBirth);
+			return Integer.toString(birthDay.get(Calendar.DAY_OF_MONTH));
+		}
+	}
+	
+	/**
+	 * Method to return the month that the customer was born
+	 *  * @return String representing the month
+	 */
+	public String getBirthMonth() {
+		
+		if (dateOfBirth == null) {
+			return null;
+		} else {
+			Calendar birthMonth = new GregorianCalendar();
+			birthMonth.setTime(dateOfBirth);
+			return Integer.toString(birthMonth.get(Calendar.MONTH));
+		}
+	}
+	
+	public String calculateBirthDay() {
+		return this.birthday = getBirthday() + "-" + getBirthMonth();
+	}
+	
 }

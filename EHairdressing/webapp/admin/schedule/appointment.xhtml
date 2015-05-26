@@ -6,7 +6,7 @@
                 template="/WEB-INF/templates/template.xhtml">
                 
     <ui:define name="title">
-		Agenda General
+		Agenda Citas
 	</ui:define>
 	
     <ui:define name="content">
@@ -16,9 +16,9 @@
 		
 		<h:form>
 		<div class="Container70">
-		    <p:growl id="messages" showDetail="true" />
-			<p:panel header="Agenda general">
-				<p:schedule id="schedule" value="#{appointmentScheduleView.lazyEventModel}" locale="es" timeZone="GMT+2" widgetVar="myschedule" resizable="true">
+		    <p:growl id="messages"/>
+			<p:panel header="Agenda citas">
+				<p:schedule id="schedule" value="#{appointmentScheduleView.lazyEventModel}" locale="es" timeZone="GMT+2" widgetVar="myschedule">
 					<p:ajax event="dateSelect" listener="#{appointmentScheduleView.onDateSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
 		            <p:ajax event="eventSelect" listener="#{appointmentScheduleView.onEventSelect}" update="eventDetails" oncomplete="PF('eventDialog').show();" />
 				</p:schedule>
@@ -26,12 +26,22 @@
 					<p:dialog id="dialog" widgetVar="eventDialog" header="Detalles cita"
 						showEffect="clip" hideEffect="clip">
 						<h:panelGrid id="eventDetails" columns="2">
-
-							
-							<h:outputLabel for="title" value="Título:" />
-				            <p:inputText id="title" value="#{appointmentScheduleView.event.title}" required="true" />
+						
+							<h:outputLabel value="Cliente:" />
+				            <p:selectOneMenu id ="customer" value="#{appointmentScheduleView.selectedCustomer}" rendered = "#{empty appointmentScheduleView.event.id}"
+						         converter="customer" height="250" effect="fade" var="c">
+						         <f:selectItem itemLabel="Seleccionar" itemValue="" />
+						         <f:selectItems value="#{appointmentScheduleView.availableCustomers}" var="customer" itemLabel="#{customer}" itemValue="#{customer}"/>
+						         <p:column>
+						          #{c.id} - #{c.surname} #{" "} #{c.name}
+						         </p:column>
+							</p:selectOneMenu>
+							<p:inputText value="#{appointmentScheduleView.event.data}" rendered = "#{not empty appointmentScheduleView.event.id}">
+								<f:converter converterId="customer"/>
+							</p:inputText>
+							<h:outputLabel for="services" value="Servicios:" />
+				            <p:inputText id="services" value="#{appointmentScheduleView.event.title}" required="true" requiredMessage="Por favor, inserte los servicios para la cita"/>
 				 
-				            
 				            <p:outputLabel for="from" value="De:" />
 					        <p:calendar id="from" value="#{appointmentScheduleView.event.startDate}" timeZone="GMT+2" pattern="dd/MM/yyyy HH:mm:ss">
 					        	 <f:convertDateTime pattern="dd/MM/yyyy HH:mm:ss" timeZone="GMT+2"/>
@@ -46,12 +56,15 @@
 				            <h:selectBooleanCheckbox id="allDay" value="#{appointmentScheduleView.event.allDay}" />
  							
  							
-							<p:commandButton type="reset" value="Reset" />
-							<p:commandButton id="addButton" value="Guardar"
-								actionListener="#{appointmentScheduleView.addEvent}" 
+							<p:commandButton type="reset" value="Reset" rendered="#{empty appointmentScheduleView.event.id}"/>
+							<p:commandButton id="addButton" value="Guardar" update="messages"
+								actionListener="#{appointmentScheduleView.doCreateAppointment}" 
 								oncomplete="PF('myschedule').update();PF('eventDialog').hide();" rendered="#{empty appointmentScheduleView.event.id}"/>
-							<p:commandButton id="updateButton" value="Actualizar"
-								actionListener="#{appointmentScheduleView.addEvent}" 
+							<p:commandButton id="updateButton" value="Actualizar" update="messages"
+								actionListener="#{appointmentScheduleView.doCreateAppointment}" 
+								oncomplete="PF('myschedule').update();PF('eventDialog').hide();" rendered="#{not empty appointmentScheduleView.event.id}"/>
+							<p:commandButton id="deleteButton" value="Borrar" update="messages"
+								actionListener="#{appointmentScheduleView.doDeleteAppointment}" 
 								oncomplete="PF('myschedule').update();PF('eventDialog').hide();" rendered="#{not empty appointmentScheduleView.event.id}"/>
 						</h:panelGrid>
 					</p:dialog>

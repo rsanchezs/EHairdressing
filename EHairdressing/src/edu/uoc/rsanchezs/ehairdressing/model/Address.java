@@ -1,5 +1,7 @@
 package edu.uoc.rsanchezs.ehairdressing.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Embeddable;
@@ -7,8 +9,10 @@ import javax.persistence.Embeddable;
 
 @Embeddable
 @Access(AccessType.PROPERTY)
-public class Address {
+public class Address implements Serializable {
 	
+	
+	private static final long serialVersionUID = 1629824705242447357L;
 	private String street;
 	private String city;
 	private String province;

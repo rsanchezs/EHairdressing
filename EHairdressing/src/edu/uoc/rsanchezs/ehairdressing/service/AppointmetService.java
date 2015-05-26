@@ -7,17 +7,21 @@ import java.util.List;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
-import javax.persistence.TypedQuery;
+import javax.inject.Named;
 import javax.validation.constraints.NotNull;
 
 import edu.uoc.rsanchezs.ehairdressing.model.Appointment;
+import edu.uoc.rsanchezs.ehairdressing.model.AppointmentPK;
+import edu.uoc.rsanchezs.ehairdressing.util.Loggable;
 
 /**
  * Session Bean implementation class AppointmetService
  * @param <Appointment>
  */
+@Named
 @Stateless
 @LocalBean
+@Loggable
 public class AppointmetService extends AbstractService<Appointment> implements Serializable{
 
  
@@ -60,18 +64,17 @@ public class AppointmetService extends AbstractService<Appointment> implements S
 		em.remove(em.merge(appointment));
 
     }
+    
     /**
-     * Method that returns an Appointment by its title
-     * @param title The title of the Appointment to find
-     * @return appointment Appointment with that title
+     * Returns an Appointment by its composite primary key.
+     * @param aPK The composite primary key
+     * @return Appointment The appointment searched
      */
-    public Appointment findAppointmentByTitle(@NotNull String title) {
-    	TypedQuery<Appointment> typedQuery = em.createNamedQuery(Appointment.FIND_BY_TITLE, Appointment.class);
-    	typedQuery.setParameter("title", title);
+    public Appointment findByCompositePK (AppointmentPK aPK) {
+    	return em.find(Appointment.class, aPK);
     	
-    	return typedQuery.getSingleResult();
     }
-   
+    
     /**
      * Method that returns all the Appointments stored in the system
      * @return List of Appointments

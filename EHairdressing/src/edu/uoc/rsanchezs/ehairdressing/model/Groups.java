@@ -18,7 +18,10 @@ import static javax.persistence.GenerationType.SEQUENCE;
  *
  */
 @Entity
+@NamedQuery(name = "Groups.findById", query = "SELECT g FROM Groups g WHERE g.id=:id")
 public class Groups implements Serializable {
+	
+	public static final String FIND_BY_ID = "Groups.findById";
 
 	private static final long serialVersionUID = 1L;
 	
@@ -65,7 +68,7 @@ public class Groups implements Serializable {
 	/**
 	 * @return the customers
 	 */
-	@ManyToMany(cascade = { PERSIST, MERGE, REMOVE })
+	@ManyToMany(cascade = PERSIST)
 	@JoinTable(name = "USERS_GROUPS", joinColumns = @JoinColumn(name = "GROUP_ID", referencedColumnName = "GROUP_ID"), inverseJoinColumns = @JoinColumn(name = "USER_ID", referencedColumnName = "USER_ID"))
 	public List<User> getUsers() {
 		return users;
@@ -103,6 +106,22 @@ public class Groups implements Serializable {
 		this.users = users;
 	}   
 	
+	/**
+	 * Add a user into the group
+	 * @param user
+	 */
+	public void add(User user){
+		users.add(user);
+		user.getGroups().add(this);
+	}
 	
+	/**
+	 * Removes a user from the group
+	 * @param user
+	 */
+	public void remove(User user){
+		users.remove(user);
+		user.getGroups().remove(this);
+	}
    
 }

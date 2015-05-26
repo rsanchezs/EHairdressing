@@ -14,31 +14,38 @@ import javax.inject.Named;
 import org.primefaces.event.SelectEvent;
 import org.primefaces.model.DefaultScheduleEvent;
 import org.primefaces.model.DefaultScheduleModel;
+import org.primefaces.model.DualListModel;
 import org.primefaces.model.LazyScheduleModel;
 import org.primefaces.model.ScheduleEvent;
 import org.primefaces.model.ScheduleModel;
 
 import edu.uoc.rsanchezs.ehairdressing.model.Appointment;
-import edu.uoc.rsanchezs.ehairdressing.model.Event;
+import edu.uoc.rsanchezs.ehairdressing.model.AppointmentPK;
+import edu.uoc.rsanchezs.ehairdressing.model.Customer;
 import edu.uoc.rsanchezs.ehairdressing.service.AppointmetService;
-import edu.uoc.rsanchezs.ehairdressing.service.EventService;
+import edu.uoc.rsanchezs.ehairdressing.service.CustomerService;
 
 @Named
 @ViewScoped
-public class AppointmentScheduleView extends AbstractBean implements
-		Serializable {
+public class AppointmentScheduleView implements Serializable {
 
 	private static final long serialVersionUID = 4894214699497372795L;
 
 
 	@Inject
 	private AppointmetService appointmentService;
-
+	
+	@Inject
+	private CustomerService customerService;
+	
 	private ScheduleEvent event = new DefaultScheduleEvent();
 	private ScheduleModel eventModel;
 	private ScheduleModel lazyEventModel;
 	private List<Appointment> listOfAppointments = new ArrayList<Appointment>();
+	private Customer selectedCustomer = new Customer();
+	private List<Customer> availableCustomers = new ArrayList<Customer>();
 
+	
 	
 	/**
 	 * Default constructor
@@ -53,6 +60,7 @@ public class AppointmentScheduleView extends AbstractBean implements
 	@PostConstruct
 	public void init() {
 		
+		availableCustomers = customerService.findAllCustomers();
 		eventModel = new DefaultScheduleModel();
 		lazyEventModel = new LazyScheduleModel() {
 
@@ -63,7 +71,8 @@ public class AppointmentScheduleView extends AbstractBean implements
 					lazyEventModel.addEvent(new DefaultScheduleEvent(
 							appointment.getTitle(),
 							appointment.getStartDate(), 
-							appointment.getEndDate()));
+							appointment.getEndDate(),
+							appointment.getCustomer()));
 				}
 			}	
 
@@ -72,26 +81,38 @@ public class AppointmentScheduleView extends AbstractBean implements
 	}
 	
 	/**
-	 * Method to add an Appointment into the schedule. It persists
-	 * the appointment in the system.
+	 * Method to create or update an Appointment into the schedule.
 	 * @param actionEvent
 	 */
-	public void addEvent(ActionEvent actionEvent) {
+	public void doCreateAppointment(ActionEvent actionEvent) {
+		
 		if (event.getId() == null) {
 			eventModel.addEvent(event);
-			Appointment appointment = new Appointment(event.getTitle(),
-					event.getStartDate(), event.getEndDate());
+			Appointment appointment = new Appointment(event.getTitle(), event.getStartDate(), event.getEndDate(), selectedCustomer);
 			appointmentService.createAppointment(appointment);
 		}else{
-			eventModel.updateEvent(event);
-			Appointment appointment = appointmentService.
-					findAppointmentByTitle(event.getTitle());
+			AppointmentPK aPK = new AppointmentPK(event.getStartDate(), ((Customer) event.getData()).getId());
+			Appointment appointment = appointmentService.findByCompositePK(aPK);
 			appointment.setTitle(event.getTitle());
 			appointment.setStartDate(event.getStartDate());
 			appointment.setEndDate(event.getEndDate());
+			appointment.setCustomer((Customer)event.getData());
 			appointmentService.updateAppointment(appointment);
+			eventModel.updateEvent(event);
 		}
 		event = new DefaultScheduleEvent();
+	}
+	
+	/**
+	 * Method to remove an Appointment from the schedule. 
+	 * @param 
+	 */
+	public void doDeleteAppointment(ActionEvent actionEvent) {
+		
+		AppointmentPK aPK = new AppointmentPK(event.getStartDate(), ((Customer) event.getData()).getId());
+		Appointment appointment = appointmentService.findByCompositePK(aPK);
+		eventModel.deleteEvent(event);
+		appointmentService.removeAppointment(appointment);
 	}
 	
 	/**
@@ -156,6 +177,36 @@ public class AppointmentScheduleView extends AbstractBean implements
 	public void setListOfAppointments(List<Appointment> listOfAppointments) {
 		this.listOfAppointments = listOfAppointments;
 	}
+
+	/**
+	 * @return the selectedCustomer
+	 */
+	public Customer getSelectedCustomer() {
+		return selectedCustomer;
+	}
+
+	/**
+	 * @return the availableCustomers
+	 */
+	public List<Customer> getAvailableCustomers() {
+		return availableCustomers;
+	}
+
+	/**
+	 * @param selectedCustomer the selectedCustomer to set
+	 */
+	public void setSelectedCustomer(Customer selectedCustomer) {
+		this.selectedCustomer = selectedCustomer;
+	}
+
+	/**
+	 * @param availableCustomers the availableCustomers to set
+	 */
+	public void setAvailableCustomers(List<Customer> availableCustomers) {
+		this.availableCustomers = availableCustomers;
+	}
+
 	
 
+	
 }

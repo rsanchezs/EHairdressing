@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.annotation.PostConstruct;
 import javax.faces.event.ActionEvent;
@@ -30,12 +32,15 @@ public class GeneralScheduleView implements Serializable {
 	
 	@Inject
 	private EventService eventService;
+	
+	@Inject
+	private transient Logger logger;
+	
 
 	private ScheduleEvent event = new DefaultScheduleEvent();
 	private ScheduleModel eventModel;
 	private ScheduleModel lazyEventModel;
 	private List<Event> listOfEvents = new ArrayList<Event>();
-	Event ev = new Event();
 	
 
 	/**
@@ -71,27 +76,39 @@ public class GeneralScheduleView implements Serializable {
 	}
 	
 	/**
-	 * Method to add an Event into the schedule. It persists
-	 * the event in the system.
+	 * Method to add or update an Event into the schedule. 
 	 * @param actionEvent
 	 */
-	public void addEvent(ActionEvent actionEvent) {
+	public void doCreateEvent(ActionEvent actionEvent) {
 		if (event.getId() == null) {
 			eventModel.addEvent(event);
-			Event ev = new Event(event.getTitle(), event.getStartDate(), 
+			Event ev = new Event(event.getId(), event.getTitle(), event.getStartDate(), 
 					event.getEndDate());
 			eventService.createEvent(ev);
 		}else{
-			eventModel.updateEvent(event);
-			Event ev = eventService.findEventByTitle(event.getTitle());
+			Event ev = (Event)event.getData();
 			ev.setTitle(event.getTitle());
 			ev.setStartDate(event.getStartDate());
 			ev.setEndDate(event.getEndDate());
 			eventService.updateEvent(ev);
+			eventModel.updateEvent(event);
+			
 		}
 		event = new DefaultScheduleEvent();
 		
 	
+	}
+
+	/**
+	 * Method to remove an Event from the schedule. 
+	 * @param actionEvent
+	 */
+	public void doDeleteEvent(ActionEvent actionEvent) {
+
+		Event ev = (Event) event.getData();
+		eventModel.deleteEvent(event);
+		eventService.removeEvent(ev);
+
 	}
 	
 	/**
@@ -152,8 +169,5 @@ public class GeneralScheduleView implements Serializable {
 	public void setLazyEventModel(ScheduleModel lazyEventModel) {
 		this.lazyEventModel = lazyEventModel;
 	}
-	
-	
-	
 	
 }
