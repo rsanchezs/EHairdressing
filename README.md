@@ -6,4 +6,4 @@ It is a software management for hair salons. The functionalities are:
   -Connection servive
   -Maintance service (clients, services,...)
   -CRUD and send email/sms
-Is was developed with JEE and its frameworks: JPA, EJB and JSF(with Primefaces).
+It was developed with JEE and its frameworks: JPA, EJB and JSF(with Primefaces).
